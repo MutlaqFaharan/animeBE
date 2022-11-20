@@ -23,9 +23,9 @@ import { ContentModule } from './modules/content/content.module';
   imports: [
     ConfigModule.forRoot({ isGlobal: true }),
     MongooseModule.forRoot(process.env.MONGODB_URL),
-    ServicesModule,
     SystemUsersModule,
     ContentModule,
+    ServicesModule,
     AuthModule,
     I18nModule.forRoot(I18nOptions),
     PassportModule,

@@ -6,10 +6,12 @@ import {
   Patch,
   Param,
   Delete,
+  Put,
 } from '@nestjs/common';
 import { PostService } from './post.service';
 import { CreatePostDto } from './dto/create-post.dto';
 import { UpdatePostDto } from './dto/update-post.dto';
+import mongoose from 'mongoose';
 import { ApiTags } from '@nestjs/swagger';
 
 @ApiTags('posts')
@@ -21,24 +23,27 @@ export class PostController {
   create(@Body() createPostDto: CreatePostDto) {
     return this.postService.create(createPostDto);
   }
-
+  // TODO: Paginated
   @Get()
   findAll() {
     return this.postService.findAll();
   }
 
-  @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.postService.findOne(+id);
+  @Get(':postID')
+  findOne(@Param('postID') postID: mongoose.Schema.Types.ObjectId) {
+    return this.postService.findOne(postID);
   }
 
-  @Patch(':id')
-  update(@Param('id') id: string, @Body() updatePostDto: UpdatePostDto) {
-    return this.postService.update(+id, updatePostDto);
+  @Put(':postID')
+  update(
+    @Param('postID') postID: mongoose.Schema.Types.ObjectId,
+    @Body() updatePostDto: UpdatePostDto,
+  ) {
+    return this.postService.update(postID, updatePostDto);
   }
 
-  @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.postService.remove(+id);
+  @Delete(':postID')
+  remove(@Param('postID') postID: mongoose.Schema.Types.ObjectId) {
+    return this.postService.remove(postID);
   }
 }
