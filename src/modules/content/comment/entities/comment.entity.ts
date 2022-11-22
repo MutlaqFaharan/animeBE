@@ -1,5 +1,5 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
-import mongoose, { Document, NullExpression } from 'mongoose';
+import mongoose, { HydratedDocument, NullExpression } from 'mongoose';
 import { Basic } from 'src/shared/entities/basic.entity';
 
 /**
@@ -8,7 +8,7 @@ import { Basic } from 'src/shared/entities/basic.entity';
  *          Replay to Hi : Hi back id 2, replied to id=1
  *          Any replay to "Hi back" id 3, replied to id=2 will count as a reply to id=1
  */
-export type CommentDocument = Comment & Document;
+export type CommentDocument = HydratedDocument<Comment>;
 
 @Schema({
   validateBeforeSave: true,
