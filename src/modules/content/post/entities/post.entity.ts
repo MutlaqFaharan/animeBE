@@ -1,10 +1,10 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
-import mongoose, { Document } from 'mongoose';
+import mongoose, { HydratedDocument } from 'mongoose';
 import { Basic } from 'src/shared/entities/basic.entity';
 import { Video } from 'src/shared/interfaces/media.interface';
 import { Image } from 'src/shared/interfaces/media.interface';
 
-export type PostDocument = Post & Document;
+export type PostDocument = HydratedDocument <Post> ;
 
 @Schema({
   validateBeforeSave: true,
