@@ -18,15 +18,17 @@ import { PassportModule } from '@nestjs/passport';
 import { CloudinaryModule } from './cloudinary/cloudinary.module';
 import { SystemUsersModule } from './modules/system-users/system-users.module';
 import { ContentModule } from './modules/content/content.module';
+import { DecoratorsModule } from './shared/decorators/decorators.module';
 
 @Module({
   imports: [
     ConfigModule.forRoot({ isGlobal: true }),
     MongooseModule.forRoot(process.env.MONGODB_URL),
-    ServicesModule,
     SystemUsersModule,
     ContentModule,
+    ServicesModule,
     AuthModule,
+    DecoratorsModule,
     I18nModule.forRoot(I18nOptions),
     PassportModule,
     CloudinaryModule,
