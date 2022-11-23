@@ -12,9 +12,12 @@ import { Post, PostDocument } from './entities/post.entity';
 export class PostService {
   constructor(@InjectModel('Post') private postModel: Model<PostDocument>) {}
 
-  create(createPostDto: CreatePostDto): Promise<Post> {
+  create(
+    createPostDto: CreatePostDto,
+    animeFanID: mongoose.Schema.Types.ObjectId,
+  ): Promise<Post> {
     const post = new this.postModel(createPostDto);
-    // TODO: Attach logged in user ID to Author property
+    post.author = animeFanID;
     return post.save();
   }
 
