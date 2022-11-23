@@ -9,6 +9,7 @@ import { APP_FILTER, APP_GUARD, APP_INTERCEPTOR } from '@nestjs/core';
 // import { JwtAuthGuard } from 'src/modules/auth/guards/jwt-auth.guard';
 import { RolesGuard } from 'src/guards/roles.guard';
 import { CustomExceptionInterceptor } from 'src/interceptors/exception-translation.interceptor';
+import { JwtAuthGuard } from 'src/guards/jwt-auth.guard';
 
 export const I18nOptions = {
   fallbackLanguage: 'en',
@@ -24,10 +25,10 @@ export const I18nOptions = {
   ],
 };
 
-// export const GlobalJwtAuthGuard = {
-//   provide: APP_GUARD,
-//   useClass: JwtAuthGuard,
-// };
+export const GlobalJwtAuthGuard = {
+  provide: APP_GUARD,
+  useClass: JwtAuthGuard,
+};
 
 export const GlobalRolesGuard = {
   provide: APP_GUARD,

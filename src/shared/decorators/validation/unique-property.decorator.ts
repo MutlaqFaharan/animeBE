@@ -9,6 +9,7 @@ import {
 } from 'class-validator';
 import { Model } from 'mongoose';
 import { UserDocument } from 'src/modules/system-users/user/entities/user.entity';
+import { checkArrayNullability } from 'src/shared/util/check-nullability.util';
 
 /**
  * #### Custom Validator to check if the email exists or not
@@ -26,7 +27,7 @@ export class CustomEmailValidation implements ValidatorConstraintInterface {
     validationArguments?: ValidationArguments,
   ): Promise<any> {
     const user = await this.userModel.findOne({
-      email: value?.toLowerCase()?.trim(),
+      email: value,
     });
     if (!user) {
       return true;
@@ -102,7 +103,16 @@ export class CustomPhoneNumberValidation
     value: any,
     validationArguments?: ValidationArguments,
   ): Promise<any> {
-    const user = await this.userModel.findOne({ phoneNumber: value });
+    const user = await this.userModel.findOne({
+      $and: [
+        {
+          phoneNumber: value,
+        },
+        {
+          phoneNumber: { $ne: null },
+        },
+      ],
+    });
     if (!user) {
       return true;
     }
@@ -135,8 +145,8 @@ export class CustomUsernameValidation implements ValidatorConstraintInterface {
   async validate(
     value: any,
     validationArguments?: ValidationArguments,
-  ): Promise<any> {
-    const user = await this.userModel.findOne({ username: value });
+  ): Promise<boolean> {
+    const user = await this.userModel?.findOne({ username: value });
     if (!user) {
       return true;
     }
