@@ -1,9 +1,9 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
-import mongoose, { HydratedDocument } from 'mongoose';
+import mongoose, { HydratedDocument, Document } from 'mongoose';
 import { Basic } from 'src/shared/entities/basic.entity';
 import { Role } from 'src/shared/enums/role.enum';
 
-export type UserDocument = HydratedDocument<User>;
+export type UserDocument = User & Document;
 
 @Schema({
   validateBeforeSave: true,
