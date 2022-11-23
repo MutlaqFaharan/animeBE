@@ -8,6 +8,7 @@ import { JwtService } from '@nestjs/jwt';
 import { AnimeFanSignUpDto } from './dto/anime-fan-sign-up.dto';
 import { Role } from 'src/shared/enums/role.enum';
 import { language } from 'src/shared/util/language.util';
+import { cleanObject } from 'src/shared/util/clean-object.util';
 
 @Injectable()
 export class AuthService {
@@ -32,8 +33,8 @@ export class AuthService {
   }
   async login(req: any): Promise<{ token: string }> {
     const { user } = req;
-    delete user['password'];
-    const payload = user;
+    const payload = cleanObject(user._doc);
+    delete payload['password'];
     const token = this.jwtService.sign(payload, {
       secret: process.env.TOKEN_SECRET,
       expiresIn: process.env.EXPIRES_IN,
@@ -49,6 +50,6 @@ export class AuthService {
     const lang = language(req);
     //    await this.mailService.animeEmail(animeFan, lang, Emails.Welcome);
     await animeFan.save();
-    return { message: 'auth.signup.animeFan', statusCode: 201 };
+    return { message: 'auth.signup.animeFan.success', statusCode: 201 };
   }
 }

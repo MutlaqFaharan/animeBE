@@ -9,6 +9,7 @@ import { AuthModule } from './modules/auth/auth.module';
 import {
   GlobalCustomExceptionFilter,
   GlobalCustomExceptionInterceptor,
+  GlobalJwtAuthGuard,
   GlobalRolesGuard,
   I18nOptions,
 } from './shared/config-constants/app.configuration';
@@ -40,6 +41,7 @@ import { DecoratorsModule } from './shared/decorators/decorators.module';
     GlobalCustomExceptionInterceptor,
     ServerLogger,
     GlobalRolesGuard,
+    GlobalJwtAuthGuard,
   ],
 })
 export class AppModule {}
