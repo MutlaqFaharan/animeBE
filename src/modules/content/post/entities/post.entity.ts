@@ -4,7 +4,7 @@ import { Basic } from 'src/shared/entities/basic.entity';
 import { Video } from 'src/shared/interfaces/media.interface';
 import { Image } from 'src/shared/interfaces/media.interface';
 
-export type PostDocument = HydratedDocument <Post> ;
+export type PostDocument = HydratedDocument<Post>;
 
 @Schema({
   validateBeforeSave: true,
@@ -33,7 +33,11 @@ export class Post extends Basic {
   })
   videos: Video[];
 
-  @Prop({ type: mongoose.Schema.Types.ObjectId, ref: 'User' })
+  @Prop({
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'User',
+    required: [true, 'Post Author is required'],
+  })
   author: mongoose.Schema.Types.ObjectId;
 
   @Prop({ type: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Comment' }] })

@@ -49,6 +49,7 @@ export class User extends Basic {
 
   @Prop({
     type: String,
+    required: [true, 'Role is Required'],
     enum: Role,
   })
   role: Role;
