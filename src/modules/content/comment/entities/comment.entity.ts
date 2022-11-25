@@ -17,7 +17,11 @@ export class Comment extends Basic {
   @Prop({ type: String })
   text: string;
 
-  @Prop({ type: mongoose.Schema.Types.ObjectId, ref: 'User' })
+  @Prop({
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'User',
+    required: [true, 'A comment Must Have An Author'],
+  })
   author: mongoose.Schema.Types.ObjectId;
   /*
   comments on the specified comment
@@ -27,12 +31,16 @@ export class Comment extends Basic {
   -- "Another replay"
   */
   @Prop({ type: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Comment' }] })
-  comments: mongoose.Schema.Types.ObjectId[]; // the comments replaying to the specified comment
+  comments: mongoose.Schema.Types.ObjectId[]; // the comments replaying to this comment
 
   @Prop({ type: [{ type: mongoose.Schema.Types.ObjectId, ref: 'User' }] })
   likes: mongoose.Schema.Types.ObjectId[];
 
-  @Prop({ type: mongoose.Schema.Types.ObjectId, ref: 'Post' })
+  @Prop({
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'Post',
+    required: [true, 'A Comment Must Belong to a Post'],
+  })
   post: mongoose.Schema.Types.ObjectId;
 
   @Prop({ type: mongoose.Schema.Types.ObjectId, ref: 'Comment' })
