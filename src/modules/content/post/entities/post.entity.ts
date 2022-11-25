@@ -17,7 +17,6 @@ export class Post extends Basic {
     type: [
       {
         url: String,
-        filename: String,
       },
     ],
   })
@@ -27,7 +26,6 @@ export class Post extends Basic {
     type: [
       {
         url: String,
-        filename: String,
       },
     ],
   })
