@@ -1,8 +1,6 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import mongoose, { HydratedDocument } from 'mongoose';
 import { Basic } from 'src/shared/entities/basic.entity';
-import { Video } from 'src/shared/interfaces/media.interface';
-import { Image } from 'src/shared/interfaces/media.interface';
 
 export type PostDocument = HydratedDocument<Post>;
 
@@ -14,24 +12,14 @@ export class Post extends Basic {
   text: string;
 
   @Prop({
-    type: [
-      {
-        url: String,
-        filename: String,
-      },
-    ],
+    type: [{ type: String }],
   })
-  images: Image[];
+  images: string[];
 
   @Prop({
-    type: [
-      {
-        url: String,
-        filename: String,
-      },
-    ],
+    type: [{ type: String }],
   })
-  videos: Video[];
+  videos: string[];
 
   @Prop({
     type: mongoose.Schema.Types.ObjectId,

@@ -9,7 +9,6 @@ import {
 } from 'class-validator';
 import { Model } from 'mongoose';
 import { UserDocument } from 'src/modules/system-users/user/entities/user.entity';
-import { checkArrayNullability } from 'src/shared/util/check-nullability.util';
 
 /**
  * #### Custom Validator to check if the email exists or not

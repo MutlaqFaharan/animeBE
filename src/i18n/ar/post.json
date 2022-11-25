@@ -1,0 +1,7 @@
+{
+  "errors": {
+    "validation": {
+      "validateIf": "يجب ادخال نص او صورة او فديو"
+    }
+  }
+}
