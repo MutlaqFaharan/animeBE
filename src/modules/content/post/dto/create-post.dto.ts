@@ -19,9 +19,6 @@ export class CreatePostDto {
     minLength: 10,
     maxLength: 2200,
   })
-  @PostValidation({
-    message: i18nValidationMessage(''),
-  })
   @IsString({
     message: i18nValidationMessage(''),
   })
@@ -42,7 +39,6 @@ export class CreatePostDto {
     }`,
     isArray: true,
   })
-  @IsArray({ each: true })
   images: string[];
 
   @ApiProperty({
@@ -54,6 +50,5 @@ export class CreatePostDto {
     }`,
     isArray: true,
   })
-  @IsArray({ each: true })
   videos: string[];
 }
