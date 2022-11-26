@@ -33,6 +33,9 @@ export class Post extends Basic {
 
   @Prop({ type: [{ type: mongoose.Schema.Types.ObjectId, ref: 'User' }] })
   likes: mongoose.Schema.Types.ObjectId[];
+
+  @Prop({ type: [{ type: mongoose.Schema.Types.ObjectId, ref: 'User' }] })
+  views: mongoose.Schema.Types.ObjectId[];
 }
 
 export const PostSchema = SchemaFactory.createForClass(Post);

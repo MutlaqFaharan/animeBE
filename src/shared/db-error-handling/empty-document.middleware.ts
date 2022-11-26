@@ -1,5 +1,6 @@
 import { HttpException, HttpStatus } from '@nestjs/common';
 import { Document } from 'mongoose';
+import { sharedErrorsTranslationPath } from '../constants/dto-translation';
 /**
  * #### throw error if the document is empty
  *
@@ -8,6 +9,9 @@ import { Document } from 'mongoose';
  */
 export function emptyDocument<T>(document: T, name: string): void {
   if (!document || (document as T[])?.length < 1) {
-    throw new HttpException(`${name} not Found`, HttpStatus.BAD_REQUEST);
+    throw new HttpException(
+      sharedErrorsTranslationPath + name,
+      HttpStatus.NOT_FOUND,
+    );
   }
 }

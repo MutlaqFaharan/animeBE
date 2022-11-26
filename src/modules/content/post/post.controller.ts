@@ -4,10 +4,12 @@ import {
   Post,
   Body,
   Request,
+  Req,
   Param,
   Delete,
   Put,
   UseGuards,
+  Query,
 } from '@nestjs/common';
 import { PostService } from './post.service';
 import { CreatePostDto } from './dto/create-post.dto';
@@ -17,6 +19,8 @@ import { ApiTags } from '@nestjs/swagger';
 import { JwtAuthGuard } from 'src/guards/jwt-auth.guard';
 import { Roles } from 'src/shared/decorators/roles.decorator';
 import { Role } from 'src/shared/enums/role.enum';
+import { MongoDBIDPipe } from 'src/shared/pipes/mongo-id.pipe';
+import { PaginationDto } from 'src/shared/dtos/pagination.dto';
 
 @ApiTags('posts')
 @UseGuards(JwtAuthGuard)
@@ -24,25 +28,30 @@ import { Role } from 'src/shared/enums/role.enum';
 export class PostController {
   constructor(private readonly postService: PostService) {}
 
+  @Roles(Role.AnimeFan)
   @Post()
-  create(@Body() createPostDto: CreatePostDto, @Request() req) {
+  create(@Body() createPostDto: CreatePostDto, @Req() req) {
     return this.postService.create(createPostDto, req.user._id);
   }
-  // TODO: Paginated
+
   @Get()
-  findAll() {
-    return this.postService.findAll();
+  findAll(@Query() query: PaginationDto) {
+    return this.postService.findAll(query);
   }
 
   @Get(':postID')
-  findOne(@Param('postID') postID: mongoose.Schema.Types.ObjectId) {
+  findOne(
+    @Param('postID', new MongoDBIDPipe())
+    postID: mongoose.Schema.Types.ObjectId,
+  ) {
     return this.postService.findOne(postID);
   }
 
   @Roles(Role.AnimeFan, Role.QA, Role.Admin)
   @Put(':postID')
   update(
-    @Param('postID') postID: mongoose.Schema.Types.ObjectId,
+    @Param('postID', new MongoDBIDPipe())
+    postID: mongoose.Schema.Types.ObjectId,
     @Body() updatePostDto: UpdatePostDto,
   ) {
     return this.postService.update(postID, updatePostDto);
@@ -50,7 +59,10 @@ export class PostController {
 
   @Roles(Role.AnimeFan, Role.Admin)
   @Delete(':postID')
-  remove(@Param('postID') postID: mongoose.Schema.Types.ObjectId) {
+  remove(
+    @Param('postID', new MongoDBIDPipe())
+    postID: mongoose.Schema.Types.ObjectId,
+  ) {
     return this.postService.remove(postID);
   }
 }

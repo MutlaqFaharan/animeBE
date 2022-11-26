@@ -22,7 +22,10 @@ export class PostValidationConstraint implements ValidatorConstraintInterface {
  * @param validationOptions class-validator options
  * @returns weather the validation returns true or not (true/false)
  */
-export function PostValidation(validationOptions?: ValidationOptions) {
+export function PostValidation(
+  properties: string[],
+  validationOptions?: ValidationOptions,
+) {
   return (object: any, propertyName: string) => {
     registerDecorator({
       target: object.constructor,

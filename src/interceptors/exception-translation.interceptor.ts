@@ -53,7 +53,7 @@ export class CustomExceptionInterceptor
       request.originalUrl,
       'CustomExceptionInterceptor - Request',
       request,
-      42069, // ! Nice
+      69, // ! Nice
     );
     return next.handle().pipe(
       map(async (data) => {
