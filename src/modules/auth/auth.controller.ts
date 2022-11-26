@@ -7,6 +7,7 @@ import {
   Param,
   Delete,
   Request,
+  Req,
   UseGuards,
 } from '@nestjs/common';
 import { ApiTags } from '@nestjs/swagger';
@@ -23,7 +24,7 @@ export class AuthController {
 
   @Public()
   @Post('sign-up')
-  signUp(@Body() animeFanSignUpDto: AnimeFanSignUpDto, @Request() req) {
+  signUp(@Body() animeFanSignUpDto: AnimeFanSignUpDto, @Req() req) {
     return this.authService.signUp(animeFanSignUpDto, req);
   }
 

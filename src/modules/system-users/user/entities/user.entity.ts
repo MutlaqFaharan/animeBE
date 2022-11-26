@@ -1,4 +1,5 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
+import { Exclude } from 'class-transformer';
 import mongoose, { HydratedDocument, Document } from 'mongoose';
 import { Basic } from 'src/shared/entities/basic.entity';
 import { Role } from 'src/shared/enums/role.enum';
@@ -18,6 +19,7 @@ export class User extends Basic {
   })
   email: string;
 
+  @Exclude()
   @Prop({
     type: String,
     required: [true, 'Password is required'],

@@ -1,0 +1,14 @@
+{
+  "errors": {
+    "validation": {
+      "query": {
+        "min": "Can't retrieve less than one post"
+      }
+    },
+    "notFound": {
+      "user": "User was not found",
+      "post": "Post was not found",
+      "comment": "Comment was not found"
+    }
+  }
+}

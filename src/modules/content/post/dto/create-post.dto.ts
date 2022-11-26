@@ -2,13 +2,15 @@ import { ApiProperty } from '@nestjs/swagger';
 import {
   IsArray,
   IsNotEmpty,
+  IsOptional,
   IsString,
+  IsUrl,
   MaxLength,
   MinLength,
-  ValidateNested,
 } from 'class-validator';
 import { i18nValidationMessage } from 'nestjs-i18n';
 import { PostValidation } from 'src/shared/decorators/validation/post.decorator';
+import { postErrorsTranslationPath } from 'src/shared/constants/dto-translation';
 
 export class CreatePostDto {
   @ApiProperty({
@@ -19,14 +21,22 @@ export class CreatePostDto {
     minLength: 10,
     maxLength: 2200,
   })
+  @IsOptional()
+  @PostValidation(['images', 'videos'])
   @IsString({
-    message: i18nValidationMessage(''),
+    message: i18nValidationMessage(
+      `${postErrorsTranslationPath}.isString.text`,
+    ),
   })
   @MinLength(10, {
-    message: i18nValidationMessage(''),
+    message: i18nValidationMessage(
+      `${postErrorsTranslationPath}.minLength.text`,
+    ),
   })
   @MaxLength(2200, {
-    message: i18nValidationMessage(''),
+    message: i18nValidationMessage(
+      `${postErrorsTranslationPath}.maxLength.text`,
+    ),
   })
   text: string;
 
@@ -39,6 +49,17 @@ export class CreatePostDto {
     }`,
     isArray: true,
   })
+  @IsOptional()
+  @PostValidation(['text', 'videos'])
+  @IsArray({
+    message: i18nValidationMessage(
+      `${postErrorsTranslationPath}.isArray.images`,
+    ),
+  })
+  @IsUrl(undefined, {
+    each: true,
+    message: i18nValidationMessage(`${postErrorsTranslationPath}.isURL.images`),
+  })
   images: string[];
 
   @ApiProperty({
@@ -49,6 +70,17 @@ export class CreatePostDto {
       images: ['https://anime.com/video1.mp4', 'https://anime.com/video2.mp4']
     }`,
     isArray: true,
+  })
+  @IsOptional()
+  @PostValidation(['text', 'images'])
+  @IsArray({
+    message: i18nValidationMessage(
+      `${postErrorsTranslationPath}.isArray.videos`,
+    ),
+  })
+  @IsUrl(undefined, {
+    each: true,
+    message: i18nValidationMessage(`${postErrorsTranslationPath}.isURL.videos`),
   })
   videos: string[];
 }

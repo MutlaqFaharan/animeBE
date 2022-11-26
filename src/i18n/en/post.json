@@ -1,7 +1,24 @@
 {
   "errors": {
     "validation": {
-      "validateIf": "You must provide at least a text, or a photo, or a video"
+      "validateIf": "You must provide at least a text, or a photo, or a video",
+      "isString": {
+        "text": "Post's text must be real characters"
+      },
+      "minLength": {
+        "text": "Minimum text length is 10 characters if no video or image was chosen"
+      },
+      "maxLength": {
+        "text": "Post's text must be less than 2200 characters"
+      },
+      "isURL": {
+        "images": "You must provide valid URLs for the images",
+        "videos": "You must provide valid URLs for the videos"
+      },
+      "isArray": {
+        "images": "images must be an array of URLs for the images",
+        "videos": "videos must be an array of URLs for the videos"
+      }
     }
   }
 }

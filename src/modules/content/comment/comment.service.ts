@@ -2,8 +2,7 @@ import { Injectable, HttpException, HttpStatus } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import mongoose, { Model } from 'mongoose';
 import { emptyDocument } from 'src/shared/db-error-handling/empty-document.middleware';
-import { validID } from 'src/shared/db-error-handling/valid-id.middleware';
-import { currentDate, localeStringOptions } from 'src/shared/util/date.util';
+import { currentDate } from 'src/shared/util/date.util';
 import { PostDocument } from '../post/entities/post.entity';
 import { PostService } from '../post/post.service';
 import { CreateCommentDto } from './dto/create-comment.dto';
@@ -22,7 +21,6 @@ export class CommentService {
     createCommentDto: CreateCommentDto,
     postID: mongoose.Schema.Types.ObjectId,
   ): Promise<any> {
-    // validID(postID);
     // const comment = new this.commentModel(createCommentDto);
     // const post = await this.postService.findOne(postID);
     // emptyDocument(post, 'Post');
@@ -54,7 +52,6 @@ export class CommentService {
     postID: mongoose.Schema.Types.ObjectId,
   ): Promise<mongoose.Schema.Types.ObjectId[] | HttpException> {
     // TODO: Populate with User
-    validID(postID);
     const post = await this.postModel
       .findById(postID)
       .populate('comments')
@@ -79,19 +76,14 @@ export class CommentService {
     postID: mongoose.Schema.Types.ObjectId,
   ): Promise<CommentDocument> {
     // TODO: Authorization
-    validID(postID);
     const post = await this.postService.findOne(postID);
     emptyDocument(post, 'Post');
-    validID(commentID);
     let comment = await this.commentModel.findByIdAndUpdate(
       commentID,
       createCommentDto,
     );
     emptyDocument(comment, 'Comment');
-    comment.updateDate = new Date(Date.now()).toLocaleString(
-      undefined,
-      localeStringOptions,
-    );
+    comment.updateDate = currentDate;
     comment.isNew = false;
     return comment.save();
   }
@@ -100,10 +92,8 @@ export class CommentService {
     commentID: mongoose.Schema.Types.ObjectId,
     postID: mongoose.Schema.Types.ObjectId,
   ): Promise<CommentDocument> {
-    validID(postID);
     const post = await this.postService.findOne(postID);
     emptyDocument(post, 'Post');
-    validID(commentID);
     let comment = await this.commentModel.findByIdAndRemove(commentID);
     console.log(comment);
 
