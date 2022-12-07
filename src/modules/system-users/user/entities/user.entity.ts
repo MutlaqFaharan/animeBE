@@ -4,7 +4,7 @@ import mongoose, { HydratedDocument, Document } from 'mongoose';
 import { Basic } from 'src/shared/entities/basic.entity';
 import { Role } from 'src/shared/enums/role.enum';
 
-export type UserDocument = User & Document;
+export type UserDocument = HydratedDocument<User>;
 
 @Schema({
   validateBeforeSave: true,
@@ -48,6 +48,16 @@ export class User extends Basic {
     required: [true, 'Birthday must be provided'],
   })
   birthday: string;
+
+  @Prop({
+    type: String,
+  })
+  profilePicture: string;
+
+  @Prop({
+    type: String,
+  })
+  coverPicture: string;
 
   @Prop({
     type: String,

@@ -1,6 +1,9 @@
 {
   "name": "animebe",
   "version": "0.0.1",
+  "engines": {
+    "node": "16.10.0"
+  },
   "description": "Anime Social Media Backend",
   "author": "Mutlaq Alsadeed",
   "private": true,

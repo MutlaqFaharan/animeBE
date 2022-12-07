@@ -1,5 +1,5 @@
 import { Transform } from 'class-transformer';
-import { IsNotEmpty, IsString, Length, MaxDate } from 'class-validator';
+import { Allow, IsNotEmpty, IsString, Length, MaxDate } from 'class-validator';
 import { i18nValidationMessage } from 'nestjs-i18n';
 import { animeFanSignupErrorsTranslationPath } from 'src/shared/constants/dto-translation';
 import { IsUsername } from 'src/shared/decorators/validation/is-username.decorator';
@@ -34,4 +34,10 @@ export class AnimeFanSignUpDto extends GeneralSignUpDto {
     ),
   })
   birthday: string;
+
+  @Allow()
+  profilePicture: string;
+
+  @Allow()
+  coverPicture: string;
 }
