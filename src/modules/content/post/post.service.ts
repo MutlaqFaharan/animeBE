@@ -34,6 +34,7 @@ export class PostService {
           model: 'Comment',
         },
       })
+      .populate('author')
       .skip(skip)
       .limit(limit)
       .sort({ _id: -1 })
