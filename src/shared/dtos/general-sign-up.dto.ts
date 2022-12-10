@@ -1,6 +1,6 @@
 import { IsNotEmpty, IsEmail, MinLength, Matches } from 'class-validator';
 import { i18nValidationMessage } from 'nestjs-i18n';
-import { Transform } from 'class-transformer';
+import { Exclude, Transform } from 'class-transformer';
 import { Match } from '../decorators/validation/match.decorator';
 import {
   UniqueEmail,
@@ -36,6 +36,7 @@ export class GeneralSignUpDto {
   })
   phoneNumber?: string;
 
+  @Exclude()
   @IsNotEmpty({
     message: i18nValidationMessage(
       'validation.userSignUpValidation.notEmpty.password',

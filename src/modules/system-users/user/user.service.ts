@@ -2,7 +2,10 @@ import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import mongoose, { Model } from 'mongoose';
 import { emptyDocument } from 'src/shared/db-error-handling/empty-document.middleware';
+import { ReturnMessage } from 'src/shared/interfaces/return-message.interface';
 import { cleanObject } from 'src/shared/util/clean-object.util';
+import { currentDate } from 'src/shared/util/date.util';
+import { UpdateProfileDto } from './dto/update-profile.dto';
 import { UserDocument, User } from './entities/user.entity';
 
 @Injectable()
@@ -28,7 +31,32 @@ export class UserService {
 
   async findOneByID(userID: mongoose.Schema.Types.ObjectId): Promise<User> {
     const user = await this.userModel.findById(userID);
+    let frontEndUser = { ...user }; // to delete properties
+    const cleanFrontEndUser = frontEndUser['_doc' as any];
+    delete cleanFrontEndUser.password;
+    delete cleanFrontEndUser.__v;
+    delete cleanFrontEndUser.updateDate;
+    delete cleanFrontEndUser.createDate;
+    return cleanFrontEndUser;
+  }
+
+  async editProfile(
+    userID: mongoose.Schema.Types.ObjectId,
+    updateProfileDto: UpdateProfileDto,
+  ): Promise<ReturnMessage> {
+    const user = await this.userModel.findByIdAndUpdate(
+      userID,
+      updateProfileDto,
+    );
+
     emptyDocument(user, 'User');
-    return user;
+    user.updateDate = currentDate;
+    user.isNew = false;
+    await user.save();
+    return {
+      message: 'auth.updateProfile',
+      statusCode: 200,
+      data: cleanObject((user as any)._doc),
+    };
   }
 }
