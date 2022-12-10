@@ -1,17 +1,17 @@
 import { Test, TestingModule } from '@nestjs/testing';
-import { QaController } from './qa.controller';
-import { QaService } from './qa.service';
+import { QAController } from './qa.controller';
+import { QAService } from './qa.service';
 
-describe('QaController', () => {
-  let controller: QaController;
+describe('QAController', () => {
+  let controller: QAController;
 
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
-      controllers: [QaController],
-      providers: [QaService],
+      controllers: [QAController],
+      providers: [QAService],
     }).compile();
 
-    controller = module.get<QaController>(QaController);
+    controller = module.get<QAController>(QAController);
   });
 
   it('should be defined', () => {
