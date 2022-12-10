@@ -7,11 +7,11 @@ import {
   Param,
   Delete,
 } from '@nestjs/common';
-import { QaService } from './qa.service';
+import { QAService } from './qa.service';
 import { ApiTags } from '@nestjs/swagger';
 
 @ApiTags('QA')
 @Controller('qa')
-export class QaController {
-  constructor(private readonly qaService: QaService) {}
+export class QAController {
+  constructor(private readonly qaService: QAService) {}
 }

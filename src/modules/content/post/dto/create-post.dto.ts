@@ -22,7 +22,7 @@ export class CreatePostDto {
     maxLength: 2200,
   })
   @IsOptional()
-  @PostValidation(['images', 'videos'])
+  // @PostValidation(['images', 'videos'])
   @IsString({
     message: i18nValidationMessage(
       `${postErrorsTranslationPath}.isString.text`,
@@ -50,7 +50,7 @@ export class CreatePostDto {
     isArray: true,
   })
   @IsOptional()
-  @PostValidation(['text', 'videos'])
+  // @PostValidation(['text', 'videos'])
   @IsArray({
     message: i18nValidationMessage(
       `${postErrorsTranslationPath}.isArray.images`,
@@ -72,7 +72,7 @@ export class CreatePostDto {
     isArray: true,
   })
   @IsOptional()
-  @PostValidation(['text', 'images'])
+  // @PostValidation(['text', 'images'])
   @IsArray({
     message: i18nValidationMessage(
       `${postErrorsTranslationPath}.isArray.videos`,

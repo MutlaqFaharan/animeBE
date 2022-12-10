@@ -1,1 +1,1 @@
-export class Qa {}
+export class QA {}
