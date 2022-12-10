@@ -1,4 +1,4 @@
-import { Transform } from 'class-transformer';
+import { Exclude, Transform } from 'class-transformer';
 import { IsNotEmpty, IsEmail, MinLength, Matches } from 'class-validator';
 import { i18nValidationMessage } from 'nestjs-i18n';
 
@@ -19,6 +19,7 @@ export class LoginDto {
   @Transform((param) => param.value.toLowerCase().trim())
   email: string;
 
+  @Exclude()
   @IsNotEmpty({
     message: i18nValidationMessage(
       'validation.userSignUpValidation.notEmpty.password',
