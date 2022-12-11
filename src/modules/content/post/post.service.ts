@@ -23,6 +23,7 @@ export class PostService {
   }
 
   async findAll(query: PaginationDto): Promise<Post[]> {
+    ///////////////
     const { skip, limit } = query;
     const posts = await this.postModel
       .find()

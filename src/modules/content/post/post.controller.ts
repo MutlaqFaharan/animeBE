@@ -28,7 +28,7 @@ import { PaginationDto } from 'src/shared/dtos/pagination.dto';
 export class PostController {
   constructor(private readonly postService: PostService) {}
 
-  @Roles(Role.AnimeFan)
+  @Roles(Role.AnimeFan) //////////////////////////
   @Post()
   create(@Body() createPostDto: CreatePostDto, @Req() req) {
     return this.postService.create(createPostDto, req.user._id);
