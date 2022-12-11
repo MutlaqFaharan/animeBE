@@ -25,5 +25,5 @@ export const checkObjectNullability = (obj: any): boolean => {
 };
 
 export const checkArrayNullability = (arr: any): boolean => {
-  return arr && arr?.length > 0;
+  return !arr && arr?.length < 1;
 };

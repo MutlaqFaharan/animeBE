@@ -7,7 +7,7 @@ export const localeStringOptions: Intl.DateTimeFormatOptions = {
   month: '2-digit',
 };
 
-export const updateTime = new Date(Date.now()).toLocaleString(
+export const currentDate = new Date(Date.now()).toLocaleString(
   undefined,
   localeStringOptions,
 );

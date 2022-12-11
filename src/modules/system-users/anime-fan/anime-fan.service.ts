@@ -1,26 +1,9 @@
 import { Injectable } from '@nestjs/common';
-import { CreateAnimeFanDto } from './dto/create-anime-fan.dto';
-import { UpdateAnimeFanDto } from './dto/update-anime-fan.dto';
+import { UniqueEmailUsernameQuery } from './dto/unique-email-username.query';
 
 @Injectable()
 export class AnimeFanService {
-  create(createAnimeFanDto: CreateAnimeFanDto) {
-    return 'This action adds a new animeFan';
-  }
+  constructor() {}
 
-  findAll() {
-    return `This action returns all animeFan`;
-  }
-
-  findOne(id: number) {
-    return `This action returns a #${id} animeFan`;
-  }
-
-  update(id: number, updateAnimeFanDto: UpdateAnimeFanDto) {
-    return `This action updates a #${id} animeFan`;
-  }
-
-  remove(id: number) {
-    return `This action removes a #${id} animeFan`;
-  }
+  uniqueProperty(query: UniqueEmailUsernameQuery) {}
 }

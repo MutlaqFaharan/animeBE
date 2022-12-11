@@ -7,12 +7,21 @@ import { AnimeFanModule } from './anime-fan/anime-fan.module';
 import { QaService } from './qa/qa.service';
 import { AdminService } from './admin/admin.service';
 import { AnimeFanService } from './anime-fan/anime-fan.service';
+import { MongooseModule } from '@nestjs/mongoose';
+import { UserSchema } from './user/entities/user.entity';
 
 @Module({
   controllers: [],
   providers: [UserService, QaService, AdminService, AnimeFanService],
-  imports: [AdminModule, UserModule, QaModule, AnimeFanModule],
+  imports: [
+    AdminModule,
+    UserModule,
+    QaModule,
+    AnimeFanModule,
+    MongooseModule.forFeature([{ name: 'User', schema: UserSchema }]),
+  ],
   exports: [
+    MongooseModule,
     AdminModule,
     UserModule,
     QaModule,

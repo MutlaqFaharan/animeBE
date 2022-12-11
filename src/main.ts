@@ -9,6 +9,7 @@ import {
 } from 'nestjs-i18n';
 import { ServerLogger } from './services/logger/server-logger';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
+import { useContainer } from 'class-validator';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule, {
@@ -30,6 +31,8 @@ async function bootstrap() {
       exceptionFactory: i18nValidationErrorFactory,
     }),
   );
+
+  useContainer(app.select(AppModule), { fallbackOnErrors: true });
 
   app.use(helmet());
 
