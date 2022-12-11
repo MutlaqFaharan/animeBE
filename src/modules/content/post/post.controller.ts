@@ -24,7 +24,7 @@ import { Role } from 'src/shared/enums/role.enum';
 export class PostController {
   constructor(private readonly postService: PostService) {}
 
-  @Post()
+  @Post() /////
   create(@Body() createPostDto: CreatePostDto, @Request() req) {
     return this.postService.create(createPostDto, req.user._id);
   }
