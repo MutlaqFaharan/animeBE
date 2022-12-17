@@ -9,6 +9,7 @@ import { Reflector } from '@nestjs/core';
 import { JwtService } from '@nestjs/jwt';
 import { Request } from 'express';
 import { UserDocument } from 'src/modules/system-users/user/entities/user.entity';
+import { checkNullability } from 'src/shared/util/check-nullability.util';
 
 @Injectable()
 export class RolesGuard implements CanActivate {
@@ -23,9 +24,14 @@ export class RolesGuard implements CanActivate {
       return true;
     }
     const request = context.switchToHttp().getRequest<Request>();
-    const token = request.headers.authorization.split(' ')[1];
+    if (!checkNullability(request.headers.authorization))
+      throw new HttpException(
+        'auth.errors.unauthorized',
+        HttpStatus.UNAUTHORIZED,
+      );
+    const token = request.headers.authorization?.split(' ')?.[1];
     const user = this.jwtService.decode(token) as UserDocument;
-    return this.matchRoles(roles, +user.role);
+    return this.matchRoles(roles, +user?.role);
   }
 
   matchRoles(requiredRoles: string[], userRole: number): boolean {

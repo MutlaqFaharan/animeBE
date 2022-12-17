@@ -1,6 +1,6 @@
 export interface ReturnMessage {
   message: string;
   statusCode: number;
-  data: any;
+  data?: any;
   token?: string;
 }

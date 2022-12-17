@@ -27,7 +27,7 @@ export class UserController {
     @Param('userID', new MongoDBIDPipe())
     userID: mongoose.Schema.Types.ObjectId,
   ) {
-    return this.userService.findOneByID(userID);
+    return this.userService.findOneByIDForFrontend(userID);
   }
 
   @Put(':userID')

@@ -69,6 +69,9 @@ export class User extends Basic {
   @Prop({ type: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Post' }] })
   posts: mongoose.Schema.Types.ObjectId[];
 
+  @Prop({ type: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Post' }] })
+  likedPosts: mongoose.Schema.Types.ObjectId[];
+
   @Prop({ type: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Comment' }] })
   comments: mongoose.Schema.Types.ObjectId[];
 
