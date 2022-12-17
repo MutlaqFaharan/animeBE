@@ -32,7 +32,7 @@ export class AuthService {
     throw new HttpException('auth.errors.wrongInfo', HttpStatus.BAD_REQUEST);
   }
   async login(req: any): Promise<{ token: string }> {
-    const { userID } = req?.user?._doc?._id;
+    const userID = req?.user?._doc?._id;
     const user = await this.userModel
       .findById(userID)
       .populate('posts')
@@ -40,7 +40,7 @@ export class AuthService {
       .populate('following')
       .populate('followers')
       .populate('comments');
-    const token = this.jwtService.sign(user, {
+    const token = this.jwtService.sign(cleanObject(user), {
       secret: process.env.TOKEN_SECRET,
       expiresIn: process.env.EXPIRES_IN,
     });

@@ -36,7 +36,6 @@ export class GeneralSignUpDto {
   })
   phoneNumber?: string;
 
-  @Exclude()
   @IsNotEmpty({
     message: i18nValidationMessage(
       'validation.userSignUpValidation.notEmpty.password',
