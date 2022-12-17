@@ -29,7 +29,9 @@ export class UserService {
     return user;
   }
 
-  async findOneByID(userID: mongoose.Schema.Types.ObjectId): Promise<User> {
+  async findOneByIDForFrontend(
+    userID: mongoose.Schema.Types.ObjectId,
+  ): Promise<User> {
     const user = await this.userModel.findById(userID);
     let frontEndUser = { ...user }; // to delete properties
     const cleanFrontEndUser = frontEndUser['_doc' as any];
@@ -38,6 +40,12 @@ export class UserService {
     delete cleanFrontEndUser.updateDate;
     delete cleanFrontEndUser.createDate;
     return cleanFrontEndUser;
+  }
+
+  async findOneByIDAsDocument(
+    userID: mongoose.Schema.Types.ObjectId,
+  ): Promise<User> {
+    return this.userModel.findById(userID);
   }
 
   async editProfile(

@@ -8,6 +8,12 @@ export type PostDocument = HydratedDocument<Post>;
   validateBeforeSave: true,
 })
 export class Post extends Basic {
+  @Prop({
+    type: Boolean,
+    default: false,
+  })
+  isDeleted: boolean;
+
   @Prop({ type: String })
   text: string;
 

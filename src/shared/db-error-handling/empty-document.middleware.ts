@@ -10,7 +10,7 @@ import { sharedErrorsTranslationPath } from '../constants/dto-translation';
 export function emptyDocument<T>(document: T, name: string): void {
   if (!document || (document as T[])?.length < 1) {
     throw new HttpException(
-      sharedErrorsTranslationPath + name,
+      sharedErrorsTranslationPath + '.' + name,
       HttpStatus.NOT_FOUND,
     );
   }

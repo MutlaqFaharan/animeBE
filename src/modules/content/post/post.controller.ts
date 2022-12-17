@@ -21,6 +21,7 @@ import { Roles } from 'src/shared/decorators/roles.decorator';
 import { Role } from 'src/shared/enums/role.enum';
 import { MongoDBIDPipe } from 'src/shared/pipes/mongo-id.pipe';
 import { PaginationDto } from 'src/shared/dtos/pagination.dto';
+import { Patch } from '@nestjs/common/decorators';
 
 @ApiTags('posts')
 @UseGuards(JwtAuthGuard)
@@ -28,7 +29,7 @@ import { PaginationDto } from 'src/shared/dtos/pagination.dto';
 export class PostController {
   constructor(private readonly postService: PostService) {}
 
-  @Roles(Role.AnimeFan) //////////////////////////
+  @Roles(Role.AnimeFan)
   @Post()
   create(@Body() createPostDto: CreatePostDto, @Req() req) {
     return this.postService.create(createPostDto, req.user._id);
@@ -55,6 +56,16 @@ export class PostController {
     @Body() updatePostDto: UpdatePostDto,
   ) {
     return this.postService.update(postID, updatePostDto);
+  }
+
+  @Roles(Role.AnimeFan)
+  @Patch(':postID/like')
+  likePost(
+    @Param('postID', new MongoDBIDPipe())
+    postID: mongoose.Schema.Types.ObjectId,
+    @Req() req,
+  ) {
+    return this.postService.likePost(postID, req?.user?._id);
   }
 
   @Roles(Role.AnimeFan, Role.Admin)

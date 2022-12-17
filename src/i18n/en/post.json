@@ -20,5 +20,8 @@
         "videos": "videos must be an array of URLs for the videos"
       }
     }
+  },
+  "success": {
+    "like": "Post Liked Successfully"
   }
 }
