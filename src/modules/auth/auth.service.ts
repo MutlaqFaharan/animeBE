@@ -32,10 +32,15 @@ export class AuthService {
     throw new HttpException('auth.errors.wrongInfo', HttpStatus.BAD_REQUEST);
   }
   async login(req: any): Promise<{ token: string }> {
-    const { user } = req;
-    const payload = cleanObject(user._doc);
-    delete payload['password'];
-    const token = this.jwtService.sign(payload, {
+    const { userID } = req?.user?._doc?._id;
+    const user = await this.userModel
+      .findById(userID)
+      .populate('posts')
+      .populate('likedPosts')
+      .populate('following')
+      .populate('followers')
+      .populate('comments');
+    const token = this.jwtService.sign(user, {
       secret: process.env.TOKEN_SECRET,
       expiresIn: process.env.EXPIRES_IN,
     });
