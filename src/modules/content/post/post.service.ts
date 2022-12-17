@@ -36,6 +36,7 @@ export class PostService {
       .find()
       .where({ isDeleted: false })
       .populate('comments')
+      .populate('likes')
       .populate({
         path: 'comments',
         populate: {
@@ -58,6 +59,7 @@ export class PostService {
       .findById(postID)
       .where({ isDeleted: false })
       .populate('comments')
+      .populate('likes')
       .populate({
         path: 'comments',
         populate: {
