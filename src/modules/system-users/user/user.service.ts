@@ -45,7 +45,9 @@ export class UserService {
   async findOneByIDAsDocument(
     userID: mongoose.Schema.Types.ObjectId,
   ): Promise<User> {
-    return this.userModel.findById(userID);
+    const user = await this.userModel.findById(userID);
+    emptyDocument(user, 'user');
+    return user;
   }
 
   async editProfile(
