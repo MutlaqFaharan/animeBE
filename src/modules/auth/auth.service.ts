@@ -8,6 +8,7 @@ import { JwtService } from '@nestjs/jwt';
 import { Role } from 'src/shared/enums/role.enum';
 import { CreateAnimeFanDto } from '../system-users/anime-fan/dto/create-anime-fan.dto';
 import { TokenPayload } from './interfaces/token-payload.interface';
+import { birthdayStringOptions } from 'src/shared/util/date.util';
 
 @Injectable()
 export class AuthService {
@@ -57,6 +58,10 @@ export class AuthService {
 
     animeFan.password = await bcrypt.hash(animeFan.password, salt);
     animeFan.role = Role.AnimeFan;
+    animeFan.birthday = new Date(createAnimeFanDto.birthday).toLocaleString(
+      undefined,
+      birthdayStringOptions,
+    );
 
     await animeFan.save();
     return { message: 'auth.signup.animeFan.success', statusCode: 201 };
