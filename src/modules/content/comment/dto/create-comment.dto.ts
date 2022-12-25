@@ -1,14 +1,12 @@
 import { ApiProperty } from '@nestjs/swagger';
 import {
-  IsBoolean,
   IsMongoId,
   IsNotEmpty,
   IsOptional,
   IsString,
   MaxLength,
-  MinLength,
 } from 'class-validator';
-import mongoose, { NullExpression } from 'mongoose';
+import mongoose from 'mongoose';
 
 export class CreateCommentDto {
   @ApiProperty()
@@ -22,5 +20,5 @@ export class CreateCommentDto {
   @ApiProperty()
   @IsOptional()
   @IsMongoId()
-  replayTo?: mongoose.Schema.Types.ObjectId | NullExpression; // replied-to Comment
+  replayTo?: mongoose.Schema.Types.ObjectId; // replied-to Comment
 }

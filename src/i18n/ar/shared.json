@@ -1,10 +1,26 @@
 {
   "errors": {
-    "validation": {
-      "query": {
-        "min": "لا يجوز تحديد اقل من منشور واحدة"
-      }
+    "error": "حدث خطاء",
+    "user": "لم يتم العثور على المستخدم"
+  },
+  "success": {
+    "success": "تمت العملية بنجاح"
+  },
+  "dtos": {
+    "property": {
+      "username": "اسم المستخدم",
+      "age": "العمر",
+      "email": "الايميل",
+      "password": "كلمة السر"
     },
-    "post": "لا يوجد posts"
+    "constraint": {
+      "uppercase": "حرف كبير",
+      "lowercase": "حرف صغير",
+      "number": "رقم",
+      "specialCharacter": "رمز"
+    }
+  },
+  "entities": {
+    "user": "المستخدم"
   }
 }

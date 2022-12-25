@@ -8,6 +8,7 @@ import {
   Delete,
   UseGuards,
 } from '@nestjs/common';
+import { Req } from '@nestjs/common/decorators';
 import { ApiTags } from '@nestjs/swagger';
 import mongoose from 'mongoose';
 import { JwtAuthGuard } from 'src/guards/jwt-auth.guard';
@@ -27,8 +28,9 @@ export class CommentController {
     @Body() createCommentDto: CreateCommentDto,
     @Param('postID', new MongoDBIDPipe())
     postID: mongoose.Schema.Types.ObjectId,
+    @Req() req: any,
   ) {
-    return this.commentService.create(createCommentDto, postID);
+    return this.commentService.create(createCommentDto, postID, req.user._id);
   }
 
   @Get()

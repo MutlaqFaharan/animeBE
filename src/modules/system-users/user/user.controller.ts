@@ -1,11 +1,8 @@
 import {
   Controller,
   Get,
-  Post,
   Body,
-  Patch,
   Param,
-  Delete,
   ClassSerializerInterceptor,
   UseInterceptors,
   Put,
@@ -27,7 +24,7 @@ export class UserController {
     @Param('userID', new MongoDBIDPipe())
     userID: mongoose.Schema.Types.ObjectId,
   ) {
-    return this.userService.findOneByIDForFrontend(userID);
+    return this.userService.findOneByID(userID);
   }
 
   @Put(':userID')

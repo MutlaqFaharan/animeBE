@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
-import { UploadApiErrorResponse, UploadApiResponse, v2 } from 'cloudinary';
+import { v2 } from 'cloudinary';
 import toStream = require('buffer-to-stream');
-import { FileResponse } from 'src/shared/interfaces/file-response.interface';
+import { FileResponse } from 'src/shared/interfaces/general/file-response.interface';
 @Injectable()
 export class CloudinaryService {
   async uploadPDF(file: Express.Multer.File): Promise<FileResponse> {

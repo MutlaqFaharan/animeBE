@@ -1,5 +1,5 @@
 import { Module } from '@nestjs/common';
-import { SystemUsersModule } from 'src/modules/system-users/system-users.module';
+import { UserModule } from 'src/modules/system-users/user/user.module';
 import {
   CustomEmailValidation,
   CustomExistEmailValidation,
@@ -15,7 +15,7 @@ import {
     CustomExistEmailValidation,
     CustomUsernameValidation,
   ],
-  imports: [SystemUsersModule],
+  imports: [UserModule],
   exports: [
     CustomEmailValidation,
     CustomPhoneNumberValidation,

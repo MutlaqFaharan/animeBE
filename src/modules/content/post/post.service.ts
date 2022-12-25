@@ -1,11 +1,11 @@
-import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
+import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import mongoose, { Model } from 'mongoose';
+import { User } from 'src/modules/system-users/user/entities/user.entity';
 import { UserService } from 'src/modules/system-users/user/user.service';
 import { emptyDocument } from 'src/shared/db-error-handling/empty-document.middleware';
 import { PaginationDto } from 'src/shared/dtos/pagination.dto';
-import { ReturnMessage } from 'src/shared/interfaces/return-message.interface';
-import { checkArrayNullability } from 'src/shared/util/check-nullability.util';
+import { ReturnMessage } from 'src/shared/interfaces/general/return-message.interface';
 import { currentDate } from 'src/shared/util/date.util';
 import { CreatePostDto } from './dto/create-post.dto';
 import { UpdatePostDto } from './dto/update-post.dto';
@@ -23,10 +23,10 @@ export class PostService {
     animeFanID: mongoose.Schema.Types.ObjectId,
   ): Promise<Post> {
     const post = new this.postModel(createPostDto);
-    const user = await this.userService.findOneByIDAsDocument(animeFanID);
-    user.posts.push(post._id);
-    post.author = animeFanID;
-    await user.save();
+    const animeFan = await this.userService.findOneByIDAsDocument(animeFanID);
+    animeFan.posts.push(post._id);
+    post.author = animeFan._id;
+    await animeFan.save();
     return post.save();
   }
 
@@ -49,8 +49,6 @@ export class PostService {
       .limit(limit)
       .sort({ _id: -1 })
       .exec();
-
-    emptyDocument(posts, 'post');
     return posts;
   }
 
@@ -60,6 +58,7 @@ export class PostService {
       .where({ isDeleted: false })
       .populate('comments')
       .populate('likes')
+      .populate('author')
       .populate({
         path: 'comments',
         populate: {
@@ -68,7 +67,6 @@ export class PostService {
         },
       })
       .exec();
-    emptyDocument(post, 'post');
     return post;
   }
 
@@ -99,14 +97,23 @@ export class PostService {
     const post = await this.postModel
       .findById(postID)
       .where({ isDeleted: false });
-    post.likes.push(animeFanID);
-    const user = await this.userService.findOneByIDAsDocument(animeFanID);
-    user.likedPosts.push(postID);
-    await user.save();
+    const animeFan = await this.userService.findOneByIDAsDocument(animeFanID);
+    this.likeUnlike(post, animeFan);
+    await animeFan.save();
     await post.save();
     return {
       message: 'post.success.like',
       statusCode: 200,
     };
+  }
+
+  likeUnlike(post: Post, animeFan: User) {
+    if (post.likes.indexOf(animeFan._id) !== -1) {
+      post.likes.splice(post.likes.indexOf(animeFan), 1);
+      animeFan.likedPosts.splice(animeFan.likedPosts.indexOf(post._id));
+    } else {
+      post.likes.push(animeFan._id);
+      animeFan.likedPosts.push(post._id);
+    }
   }
 }

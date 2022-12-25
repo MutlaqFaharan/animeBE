@@ -5,7 +5,6 @@ import {
   ValidatorConstraint,
   ValidatorConstraintInterface,
 } from 'class-validator';
-import { Role } from 'src/shared/enums/role.enum';
 
 @ValidatorConstraint({ name: 'PostValidation' })
 export class PostValidationConstraint implements ValidatorConstraintInterface {

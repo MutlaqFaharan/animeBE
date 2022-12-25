@@ -1,8 +1,9 @@
 import { APP_GUARD, APP_INTERCEPTOR, APP_FILTER } from '@nestjs/core';
 import { ThrottlerGuard } from '@nestjs/throttler';
+import { CustomHTTPExceptionFilter } from 'src/filters/custom-http-exception.filter';
 import { JwtAuthGuard } from 'src/guards/jwt-auth.guard';
 import { RolesGuard } from 'src/guards/roles.guard';
-import { CustomExceptionInterceptor } from 'src/interceptors/exception-translation.interceptor';
+import { CustomLoggerInterceptor } from 'src/interceptors/exception-translation.interceptor';
 
 export const GlobalJwtAuthGuard = {
   provide: APP_GUARD,
@@ -14,14 +15,14 @@ export const GlobalRolesGuard = {
   useClass: RolesGuard,
 };
 
-export const GlobalCustomExceptionInterceptor = {
+export const GlobalCustomLoggerInterceptor = {
   provide: APP_INTERCEPTOR,
-  useClass: CustomExceptionInterceptor,
+  useClass: CustomLoggerInterceptor,
 };
 
-export const GlobalCustomExceptionFilter = {
+export const GlobalCustomHTTPExceptionFilter = {
   provide: APP_FILTER,
-  useClass: CustomExceptionInterceptor,
+  useClass: CustomHTTPExceptionFilter,
 };
 
 export const GlobalThrottlerGuard = {

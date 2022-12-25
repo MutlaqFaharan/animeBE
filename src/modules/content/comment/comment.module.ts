@@ -4,6 +4,7 @@ import { CommentController } from './comment.controller';
 import { MongooseModule } from '@nestjs/mongoose';
 import { CommentSchema } from './entities/comment.entity';
 import { PostModule } from '../post/post.module';
+import { UserModule } from 'src/modules/system-users/user/user.module';
 
 @Module({
   controllers: [CommentController],
@@ -11,6 +12,7 @@ import { PostModule } from '../post/post.module';
   imports: [
     MongooseModule.forFeature([{ name: 'Comment', schema: CommentSchema }]),
     PostModule,
+    UserModule,
   ],
   exports: [MongooseModule],
 })

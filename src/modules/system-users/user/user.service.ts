@@ -2,7 +2,7 @@ import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import mongoose, { Model } from 'mongoose';
 import { emptyDocument } from 'src/shared/db-error-handling/empty-document.middleware';
-import { ReturnMessage } from 'src/shared/interfaces/return-message.interface';
+import { ReturnMessage } from 'src/shared/interfaces/general/return-message.interface';
 import { cleanObject } from 'src/shared/util/clean-object.util';
 import { currentDate } from 'src/shared/util/date.util';
 import { UpdateProfileDto } from './dto/update-profile.dto';
@@ -13,10 +13,22 @@ export class UserService {
   constructor(@InjectModel('User') private userModel: Model<UserDocument>) {}
 
   // * Service Functions
-  async findOneByEmail(email: string): Promise<User> {
-    let user = await this.userModel.findOne({ email });
+  async findOneByCredentials(userCredentials: string): Promise<User> {
+    let user = await this.userModel.findOne({
+      $or: [
+        {
+          email: userCredentials,
+        },
+        {
+          username: userCredentials,
+        },
+      ],
+    });
     if (!user)
-      throw new HttpException('auth.errors.wrongInfo', HttpStatus.BAD_REQUEST);
+      throw new HttpException(
+        'auth.errors.wrongEmailOrPassword',
+        HttpStatus.UNAUTHORIZED,
+      );
 
     cleanObject(user);
     return user;
@@ -29,23 +41,23 @@ export class UserService {
     return user;
   }
 
-  async findOneByIDForFrontend(
-    userID: mongoose.Schema.Types.ObjectId,
-  ): Promise<User> {
-    const user = await this.userModel.findById(userID);
-    let frontEndUser = { ...user }; // to delete properties
-    const cleanFrontEndUser = frontEndUser['_doc' as any];
-    delete cleanFrontEndUser.password;
-    delete cleanFrontEndUser.__v;
-    delete cleanFrontEndUser.updateDate;
-    delete cleanFrontEndUser.createDate;
-    return cleanFrontEndUser;
+  async findOneByID(userID: mongoose.Schema.Types.ObjectId): Promise<User> {
+    const user = await this.userModel
+      .findById(userID)
+      .populate('posts')
+      .populate('likedPosts')
+      .populate('following')
+      .populate('followers')
+      .populate('comments');
+    return cleanObject(user);
   }
 
   async findOneByIDAsDocument(
     userID: mongoose.Schema.Types.ObjectId,
   ): Promise<User> {
-    return this.userModel.findById(userID);
+    const user = await this.userModel.findById(userID);
+    emptyDocument(user, 'user');
+    return user;
   }
 
   async editProfile(
