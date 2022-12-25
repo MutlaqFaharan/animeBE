@@ -64,6 +64,6 @@ export class AuthService {
     );
 
     await animeFan.save();
-    return { message: 'auth.signup.animeFan.success', statusCode: 201 };
+    return { message: 'auth.success.register', statusCode: 201 };
   }
 }
