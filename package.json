@@ -2,7 +2,7 @@
   "name": "animebe",
   "version": "0.0.1",
   "engines": {
-    "node": "16.10.0"
+    "node": "18.12.1"
   },
   "description": "Anime Social Media Backend",
   "author": "Mutlaq Alsadeed",

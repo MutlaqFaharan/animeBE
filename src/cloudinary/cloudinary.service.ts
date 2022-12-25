@@ -9,7 +9,7 @@ export class CloudinaryService {
       const upload = v2.uploader.upload_stream((error, result) => {
         if (error) return reject(error);
         result.tags = ['instructor'];
-        result.resource_type = 'pdf';
+        result.resource_type = 'auto';
         result.folder = 'Instructors';
         result.public_id = file.originalname;
         resolve(result);
