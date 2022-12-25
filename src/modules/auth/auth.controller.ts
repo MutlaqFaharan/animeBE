@@ -1,11 +1,7 @@
 import {
   Controller,
-  Get,
   Post,
   Body,
-  Patch,
-  Param,
-  Delete,
   Request,
   Req,
   UseGuards,
@@ -13,8 +9,8 @@ import {
 import { ApiTags } from '@nestjs/swagger';
 import { LocalAuthGuard } from 'src/guards/local-auth.guard';
 import { Public } from 'src/shared/decorators/public.decorator';
+import { CreateAnimeFanDto } from '../system-users/anime-fan/dto/create-anime-fan.dto';
 import { AuthService } from './auth.service';
-import { AnimeFanSignUpDto } from './dto/anime-fan-sign-up.dto';
 import { LoginDto } from './dto/login.dto';
 
 @ApiTags('auth')
@@ -24,8 +20,8 @@ export class AuthController {
 
   @Public()
   @Post('sign-up')
-  signUp(@Body() animeFanSignUpDto: AnimeFanSignUpDto, @Req() req) {
-    return this.authService.signUp(animeFanSignUpDto, req);
+  signUp(@Body() createAnimeFanDto: CreateAnimeFanDto, @Req() req) {
+    return this.authService.signUp(createAnimeFanDto, req);
   }
 
   @Public()

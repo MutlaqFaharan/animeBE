@@ -1,13 +1,16 @@
 import { Injectable, HttpException, HttpStatus } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import mongoose, { Model } from 'mongoose';
+import { UserService } from 'src/modules/system-users/user/user.service';
 import { emptyDocument } from 'src/shared/db-error-handling/empty-document.middleware';
+import { ReturnMessage } from 'src/shared/interfaces/general/return-message.interface';
+import { checkNullability } from 'src/shared/util/check-nullability.util';
 import { currentDate } from 'src/shared/util/date.util';
 import { PostDocument } from '../post/entities/post.entity';
 import { PostService } from '../post/post.service';
 import { CreateCommentDto } from './dto/create-comment.dto';
 import { UpdateCommentDto } from './dto/update-comment.dto';
-import { CommentDocument } from './entities/comment.entity';
+import { Comment, CommentDocument } from './entities/comment.entity';
 
 @Injectable()
 export class CommentService {
@@ -15,42 +18,41 @@ export class CommentService {
     @InjectModel('Comment') private commentModel: Model<CommentDocument>,
     @InjectModel('Post') private postModel: Model<PostDocument>,
     private postService: PostService,
+    private userService: UserService,
   ) {}
 
   async create(
     createCommentDto: CreateCommentDto,
     postID: mongoose.Schema.Types.ObjectId,
-  ): Promise<any> {
-    // const comment = new this.commentModel(createCommentDto);
-    // const post = await this.postService.findOne(postID);
-    // emptyDocument(post, 'Post');
-    // comment.post = postID;
-    // if (createCommentDto.replayTo) {
-    //   const repliedToComment = await this.commentModel.findOne({
-    //     _id: createCommentDto.replayTo,
-    //   });
-    //   emptyDocument(repliedToComment, 'Comment');
-    //   const originalComment: Comment =
-    //     await this.sharedService.findParentComment(repliedToComment);
-    //   // if a comment is a replay, push it to the original parent comment.comments
-    //   originalComment?.comments?.push(comment._id);
-    //   // and save the comment who got replied to
-    //   comment.replayTo = createCommentDto?.replayTo;
-    //   originalComment.updateDate = currentDate;
-    //   originalComment.isNew = false;
-    //   await originalComment.save();
-    // } else {
-    //   // else this is the original comment
-    //   comment.replayTo = null;
-    //   post?.comments?.push(comment._id);
-    //   await post.save();
-    // }
-    // return comment.save();
+    animeFanID: mongoose.Schema.Types.ObjectId,
+  ): Promise<ReturnMessage> {
+    const { replayTo, text } = createCommentDto;
+    const subCreateCommentDto = { text };
+
+    const animeFan = await this.userService.findOneByIDAsDocument(animeFanID);
+    const post = await this.postService.findOne(postID);
+    const comment = new this.commentModel(subCreateCommentDto);
+
+    comment.author = animeFan._id;
+    post.comments.push(comment._id);
+
+    if (checkNullability(replayTo)) {
+      const originalComment = await this.findOne(replayTo);
+      originalComment.comments.push(comment._id);
+      await originalComment.save();
+    }
+
+    await animeFan.save();
+    await post.save();
+    await comment.save();
+
+    return {
+      message: '',
+      statusCode: 201,
+    };
   }
 
-  async findAll(
-    postID: mongoose.Schema.Types.ObjectId,
-  ): Promise<mongoose.Schema.Types.ObjectId[] | HttpException> {
+  async findAll(postID: mongoose.Schema.Types.ObjectId): Promise<Comment[]> {
     // TODO: Populate with User
     const post = await this.postModel
       .findById(postID)
@@ -99,5 +101,9 @@ export class CommentService {
 
     emptyDocument(comment, 'Comment');
     return comment;
+  }
+
+  findOne(commentID: mongoose.Schema.Types.ObjectId) {
+    return this.commentModel.findById(commentID);
   }
 }

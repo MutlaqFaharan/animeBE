@@ -1,14 +1,14 @@
 import {
-  GlobalCustomExceptionInterceptor,
-  GlobalCustomExceptionFilter,
+  GlobalCustomLoggerInterceptor,
   GlobalThrottlerGuard,
   GlobalRolesGuard,
   GlobalJwtAuthGuard,
+  GlobalCustomHTTPExceptionFilter,
 } from './app-constants';
 
-export const GlobalInterceptors = [GlobalCustomExceptionInterceptor];
+export const GlobalInterceptors = [GlobalCustomLoggerInterceptor];
 
-export const GlobalFilters = [GlobalCustomExceptionFilter];
+export const GlobalFilters = [GlobalCustomHTTPExceptionFilter];
 
 export const GlobalGuards = [
   GlobalThrottlerGuard,

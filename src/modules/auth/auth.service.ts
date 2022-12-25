@@ -5,10 +5,9 @@ import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import { UserService } from '../system-users/user/user.service';
 import { JwtService } from '@nestjs/jwt';
-import { AnimeFanSignUpDto } from './dto/anime-fan-sign-up.dto';
 import { Role } from 'src/shared/enums/role.enum';
-import { language } from 'src/shared/util/language.util';
-import { cleanObject } from 'src/shared/util/clean-object.util';
+import { CreateAnimeFanDto } from '../system-users/anime-fan/dto/create-anime-fan.dto';
+import { TokenPayload } from './interfaces/token-payload.interface';
 
 @Injectable()
 export class AuthService {
@@ -19,10 +18,15 @@ export class AuthService {
     private readonly userService: UserService,
     private readonly jwtService: JwtService,
   ) {}
-  async validateUser(email: string, password: string): Promise<any> {
-    const user: User = await this.userService.findOneByEmail(email);
+  async validateUser(userCredentials: string, password: string): Promise<any> {
+    const user: User = await this.userService.findOneByCredentials(
+      userCredentials,
+    );
     if (!user)
-      throw new HttpException('auth.errors.wrongInfo', HttpStatus.BAD_REQUEST);
+      throw new HttpException(
+        'auth.errors.wrongEmailOrPassword',
+        HttpStatus.BAD_REQUEST,
+      );
     const isMatch = await bcrypt.compare(password, user?.password);
 
     if (user && isMatch) {
@@ -33,27 +37,27 @@ export class AuthService {
   }
   async login(req: any): Promise<{ token: string }> {
     const userID = req?.user?._doc?._id;
-    const user = await this.userModel
-      .findById(userID)
-      .populate('posts')
-      .populate('likedPosts')
-      .populate('following')
-      .populate('followers')
-      .populate('comments');
-    const token = this.jwtService.sign(cleanObject(user), {
+    const user = await this.userModel.findById(userID);
+
+    const payload: TokenPayload = {
+      _id: user._id,
+      username: user.username,
+      role: user.role,
+    };
+    const token = this.jwtService.sign(payload, {
       secret: process.env.TOKEN_SECRET,
       expiresIn: process.env.EXPIRES_IN,
     });
     return { token };
   }
 
-  async signUp(animeFanSignUpDto: AnimeFanSignUpDto, req: any) {
-    const animeFan = new this.userModel(animeFanSignUpDto);
+  async signUp(createAnimeFanDto: CreateAnimeFanDto, req: any) {
+    const animeFan = new this.userModel(createAnimeFanDto);
     const salt = await bcrypt.genSalt();
+
     animeFan.password = await bcrypt.hash(animeFan.password, salt);
     animeFan.role = Role.AnimeFan;
-    const lang = language(req);
-    //    await this.mailService.animeEmail(animeFan, lang, Emails.Welcome);
+
     await animeFan.save();
     return { message: 'auth.signup.animeFan.success', statusCode: 201 };
   }

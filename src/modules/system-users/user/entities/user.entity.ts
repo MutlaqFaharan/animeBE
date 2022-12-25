@@ -1,6 +1,8 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { Exclude } from 'class-transformer';
-import mongoose, { HydratedDocument, Document } from 'mongoose';
+import mongoose, { HydratedDocument } from 'mongoose';
+import { Comment } from 'src/modules/content/comment/entities/comment.entity';
+import { Post } from 'src/modules/content/post/entities/post.entity';
 import { Basic } from 'src/shared/entities/basic.entity';
 import { Role } from 'src/shared/enums/role.enum';
 
@@ -67,21 +69,21 @@ export class User extends Basic {
   role: Role;
 
   @Prop({ type: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Post' }] })
-  posts: mongoose.Schema.Types.ObjectId[];
+  posts: Post[];
 
   @Prop({ type: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Post' }] })
-  likedPosts: mongoose.Schema.Types.ObjectId[];
+  likedPosts: Post[];
 
   @Prop({ type: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Comment' }] })
-  comments: mongoose.Schema.Types.ObjectId[];
+  comments: Comment[];
 
   @Prop({ type: [{ type: mongoose.Schema.Types.ObjectId, ref: 'User' }] })
-  followers: mongoose.Schema.Types.ObjectId[];
+  followers: User[];
 
   @Prop({ type: [{ type: mongoose.Schema.Types.ObjectId, ref: 'User' }] })
-  following: mongoose.Schema.Types.ObjectId[];
+  following: User[];
 
   @Prop({ type: [{ type: mongoose.Schema.Types.ObjectId, ref: 'User' }] })
-  blockedUsers: mongoose.Schema.Types.ObjectId[];
+  blockedUsers: User[];
 }
 export const UserSchema = SchemaFactory.createForClass(User);

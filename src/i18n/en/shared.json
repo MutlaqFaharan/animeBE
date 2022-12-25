@@ -1,12 +1,26 @@
 {
   "errors": {
-    "validation": {
-      "query": {
-        "min": "Can't retrieve less than one post"
-      }
+    "error": "Something Went Wrong",
+    "user": "User was not found"
+  },
+  "success": {
+    "success": "Success"
+  },
+  "dtos": {
+    "property": {
+      "username": "Username",
+      "age": "Age",
+      "email": "Email",
+      "password": "Password"
     },
-    "user": "User was not found",
-    "post": "Post was not found",
-    "comment": "Comment was not found"
+    "constraint": {
+      "uppercase": "An Uppercase Letter",
+      "lowercase": "A Lowercase Letter",
+      "number": "A Number",
+      "specialCharacter": "A Special Character"
+    }
+  },
+  "entities": {
+    "user": "User"
   }
 }

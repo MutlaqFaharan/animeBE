@@ -1,0 +1,29 @@
+{
+  "isNotEmpty": "{property} must be provided",
+
+  "min": "{property} must be equal more than {min}",
+  "max": "{property} must be equal less than {max}",
+
+  "minLength": "{property} must be equal more than {characters} characters",
+  "maxLength": "{property} must be equal less than {characters} characters",
+
+  "maxDate": "You must be older than 13 to register",
+
+  "isString": "{property} must be a string",
+  "isInt": "{property} must be an integer number",
+  "isUrl": "You must provide a valid URL",
+
+  "email": "You must enter a valid email",
+  "date": "Date Format Must be dd/mm/yy",
+
+  "uniqueEmail": "This email already exists, please choose another one",
+  "uniqueUsername": "This username already exists, please choose another one",
+  "uniquePhoneNumber": "This phone number already exists, please choose another one",
+
+  "passwordContains": {
+    "uppercase": "Password must contain an uppercase letter",
+    "lowercase": "Password must contain a lowercase letter",
+    "number": "Password must contain a number",
+    "specialCharacter": "Password must contain an special character letter"
+  }
+}

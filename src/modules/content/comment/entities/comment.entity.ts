@@ -45,6 +45,12 @@ export class Comment extends Basic {
 
   @Prop({ type: mongoose.Schema.Types.ObjectId, ref: 'Comment' })
   replayTo?: mongoose.Schema.Types.ObjectId | NullExpression; // if the comment is a replay to another comment it will have an id else it will be null
+
+  @Prop({
+    type: Boolean,
+    default: false,
+  })
+  isDeleted: boolean;
 }
 
 export const CommentSchema = SchemaFactory.createForClass(Comment);

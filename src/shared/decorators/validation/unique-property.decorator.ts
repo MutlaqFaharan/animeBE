@@ -70,7 +70,7 @@ export class CustomExistEmailValidation
     return true;
   }
   defaultMessage(validationArguments?: ValidationArguments): string {
-    return `Email does't Exists`;
+    return 'validation.uniqueEmail';
   }
 }
 
@@ -118,7 +118,7 @@ export class CustomPhoneNumberValidation
     return false;
   }
   defaultMessage(validationArguments?: ValidationArguments): string {
-    return 'Phone Number Already Exists';
+    return 'validation.uniquePhoneNumber';
   }
 }
 
@@ -152,7 +152,7 @@ export class CustomUsernameValidation implements ValidatorConstraintInterface {
     return false;
   }
   defaultMessage(validationArguments?: ValidationArguments): string {
-    return 'Phone Number Already Exists';
+    return 'validation.uniqueUsername';
   }
 }
 

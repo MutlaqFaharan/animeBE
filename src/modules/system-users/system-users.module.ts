@@ -20,16 +20,6 @@ import { UserSchema } from './user/entities/user.entity';
     AnimeFanModule,
     MongooseModule.forFeature([{ name: 'User', schema: UserSchema }]),
   ],
-  exports: [
-    MongooseModule,
-    AdminModule,
-    UserModule,
-    QAModule,
-    AnimeFanModule,
-    UserService,
-    QAService,
-    AdminService,
-    AnimeFanService,
-  ],
+  exports: [MongooseModule, AdminModule, UserModule, QAModule, AnimeFanModule],
 })
 export class SystemUsersModule {}
