@@ -18,7 +18,7 @@ import {
   UniqueEmail,
   UniquePhoneNumber,
 } from 'src/shared/decorators/validation/unique-property.decorator';
-import { createCurrentDate, thirteenYearsAgo } from 'src/shared/util/date.util';
+import { thirteenYearsAgo } from 'src/shared/util/date.util';
 
 export class CreateAnimeFanDto {
   @ApiProperty({
@@ -57,7 +57,7 @@ export class CreateAnimeFanDto {
       property: 'Birth Day',
     }),
   })
-  @Transform(({ value }) => createCurrentDate(value))
+  @Transform(({ value }) => new Date(value))
   @MaxDate(thirteenYearsAgo, {
     message: i18nValidationMessage('validation.maxDate'),
   })
