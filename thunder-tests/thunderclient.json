@@ -1,0 +1,62 @@
+[
+  {
+    "_id": "8c1fd147-14c8-40a3-8600-dc1181ef5b23",
+    "colId": "b315b745-eaa3-471c-90b4-f3a2d045acc2",
+    "containerId": "e47f5703-e566-4089-8ef7-3067a9ce81c6",
+    "name": "login",
+    "url": "auth/login",
+    "method": "POST",
+    "sortNum": 10000,
+    "created": "2022-12-27T19:51:40.251Z",
+    "modified": "2022-12-29T01:14:19.574Z",
+    "headers": [],
+    "params": [],
+    "body": {
+      "type": "json",
+      "raw": "{\n  \"email\": \"user@gmail.com\",\n  \"password\": \"11111@Kk\"\n}",
+      "form": []
+    },
+    "tests": []
+  },
+  {
+    "_id": "908e5fff-a60a-4aeb-9430-110c629da608",
+    "colId": "b315b745-eaa3-471c-90b4-f3a2d045acc2",
+    "containerId": "7da6af8a-a031-48c1-b66d-7f3239c9898a",
+    "name": "find all",
+    "url": "posts/",
+    "method": "GET",
+    "sortNum": 20000,
+    "created": "2022-12-29T01:13:11.805Z",
+    "modified": "2022-12-29T01:14:40.805Z",
+    "headers": [],
+    "params": [],
+    "auth": {
+      "type": "bearer",
+      "bearer": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2M2FiNTkzNzhjNDBjNWE3OGQ5YWRlZDEiLCJ1c2VybmFtZSI6InVzZXIiLCJyb2xlIjoiMSIsImlhdCI6MTY3MjI3NjQ1OSwiZXhwIjoxNjcyODgxMjU5fQ.GbPevkmtFSulDhjGuSH2Pa3zYP-WlU-899mwyL-ayk8"
+    },
+    "tests": []
+  },
+  {
+    "_id": "894bfb22-cceb-4346-8695-8bf7c8adee57",
+    "colId": "b315b745-eaa3-471c-90b4-f3a2d045acc2",
+    "containerId": "5923e2a6-2758-481b-bfd8-ce9b7cf392c3",
+    "name": "create",
+    "url": "posts/63ac9bb18c40c5a78d9ae0ec/comments",
+    "method": "POST",
+    "sortNum": 30000,
+    "created": "2022-12-29T01:15:06.174Z",
+    "modified": "2022-12-29T01:15:54.468Z",
+    "headers": [],
+    "params": [],
+    "body": {
+      "type": "json",
+      "raw": "{\n  \"text\":\"Yazan the pimp\"\n}",
+      "form": []
+    },
+    "auth": {
+      "type": "bearer",
+      "bearer": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2M2FiNTkzNzhjNDBjNWE3OGQ5YWRlZDEiLCJ1c2VybmFtZSI6InVzZXIiLCJyb2xlIjoiMSIsImlhdCI6MTY3MjI3NjQ1OSwiZXhwIjoxNjcyODgxMjU5fQ.GbPevkmtFSulDhjGuSH2Pa3zYP-WlU-899mwyL-ayk8"
+    },
+    "tests": []
+  }
+]

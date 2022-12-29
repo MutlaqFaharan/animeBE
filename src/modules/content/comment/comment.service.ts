@@ -26,7 +26,7 @@ export class CommentService {
     postID: mongoose.Schema.Types.ObjectId,
     animeFanID: mongoose.Schema.Types.ObjectId,
   ): Promise<ReturnMessage> {
-    const { replayTo, text } = createCommentDto;
+    const { replyTo, text } = createCommentDto;
     const subCreateCommentDto = { text };
 
     const animeFan = await this.userService.findOneByIDAsDocument(animeFanID);
@@ -34,10 +34,12 @@ export class CommentService {
     const comment = new this.commentModel(subCreateCommentDto);
 
     comment.author = animeFan._id;
+    comment.post = post._id
     post.comments.push(comment._id);
 
-    if (checkNullability(replayTo)) {
-      const originalComment = await this.findOne(replayTo);
+    if (checkNullability(replyTo)) {
+      const originalComment = await this.findOne(replyTo);
+      comment.replyTo = originalComment._id
       originalComment.comments.push(comment._id);
       await originalComment.save();
     }
@@ -47,7 +49,7 @@ export class CommentService {
     await comment.save();
 
     return {
-      message: '',
+      message: 'comment.success.create',
       statusCode: 201,
     };
   }

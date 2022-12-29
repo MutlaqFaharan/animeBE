@@ -1,0 +1,45 @@
+[
+  {
+    "_id": "b315b745-eaa3-471c-90b4-f3a2d045acc2",
+    "colName": "Anime",
+    "created": "2022-12-27T19:51:28.139Z",
+    "sortNum": 10000,
+    "folders": [
+      {
+        "_id": "e47f5703-e566-4089-8ef7-3067a9ce81c6",
+        "name": "auth",
+        "containerId": "",
+        "created": "2022-12-27T19:51:34.770Z",
+        "sortNum": 10000
+      },
+      {
+        "_id": "fe6fa4c7-e313-4bf2-9a95-aa7e00e39a71",
+        "name": "content",
+        "containerId": "",
+        "created": "2022-12-29T01:07:12.950Z",
+        "sortNum": 20000
+      },
+      {
+        "_id": "7da6af8a-a031-48c1-b66d-7f3239c9898a",
+        "name": "post",
+        "containerId": "fe6fa4c7-e313-4bf2-9a95-aa7e00e39a71",
+        "created": "2022-12-29T01:07:21.774Z",
+        "sortNum": 30000
+      },
+      {
+        "_id": "5923e2a6-2758-481b-bfd8-ce9b7cf392c3",
+        "name": "comment",
+        "containerId": "fe6fa4c7-e313-4bf2-9a95-aa7e00e39a71",
+        "created": "2022-12-29T01:07:45.537Z",
+        "sortNum": 50000
+      }
+    ],
+    "settings": {
+      "headers": [],
+      "tests": [],
+      "options": {
+        "baseUrl": "localhost:3000/api/"
+      }
+    }
+  }
+]

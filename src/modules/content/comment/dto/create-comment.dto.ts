@@ -20,5 +20,5 @@ export class CreateCommentDto {
   @ApiProperty()
   @IsOptional()
   @IsMongoId()
-  replayTo?: mongoose.Schema.Types.ObjectId; // replied-to Comment
+  replyTo?: mongoose.Schema.Types.ObjectId; // replied-to Comment
 }
