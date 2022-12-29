@@ -1,4 +1,4 @@
-import { Injectable, HttpException, HttpStatus } from '@nestjs/common';
+import { Injectable  } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import mongoose, { Model } from 'mongoose';
 import { UserService } from 'src/modules/system-users/user/user.service';
@@ -6,8 +6,7 @@ import { emptyDocument } from 'src/shared/db-error-handling/empty-document.middl
 import { ReturnMessage } from 'src/shared/interfaces/general/return-message.interface';
 import { checkNullability } from 'src/shared/util/check-nullability.util';
 import { currentDate } from 'src/shared/util/date.util';
-import { PostDocument } from '../post/entities/post.entity';
-import { PostService } from '../post/post.service';
+ import { PostService } from '../post/post.service';
 import { CreateCommentDto } from './dto/create-comment.dto';
 import { UpdateCommentDto } from './dto/update-comment.dto';
 import { Comment, CommentDocument } from './entities/comment.entity';
@@ -16,7 +15,6 @@ import { Comment, CommentDocument } from './entities/comment.entity';
 export class CommentService {
   constructor(
     @InjectModel('Comment') private commentModel: Model<CommentDocument>,
-    @InjectModel('Post') private postModel: Model<PostDocument>,
     private postService: PostService,
     private userService: UserService,
   ) {}
@@ -55,23 +53,11 @@ export class CommentService {
   }
 
   async findAll(postID: mongoose.Schema.Types.ObjectId): Promise<Comment[]> {
-    // TODO: Populate with User
-    const post = await this.postModel
-      .findById(postID)
-      .populate('comments')
-      .populate({
-        path: 'comments',
-        populate: {
-          path: 'comments',
-          model: 'Comment',
-        },
-      })
-      .select('comments');
-    emptyDocument(post, 'Post');
-    if (post.comments.length > 0) {
-      return post.comments;
-    }
-    throw new HttpException(`Comments not Found`, HttpStatus.NOT_FOUND);
+    return this.commentModel
+    .find({post: postID})
+    .populate('comments')
+
+ 
   }
 
   async update(

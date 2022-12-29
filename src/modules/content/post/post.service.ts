@@ -35,15 +35,6 @@ export class PostService {
     const posts = await this.postModel
       .find()
       .where({ isDeleted: false })
-      .populate('comments')
-      .populate('likes')
-      .populate({
-        path: 'comments',
-        populate: {
-          path: 'comments',
-          model: 'Comment',
-        },
-      })
       .populate('author')
       .skip(skip)
       .limit(limit)
@@ -56,16 +47,18 @@ export class PostService {
     const post = await this.postModel
       .findById(postID)
       .where({ isDeleted: false })
-      .populate('comments')
-      .populate('likes')
-      .populate('author')
-      .populate({
-        path: 'comments',
-        populate: {
-          path: 'comments',
-          model: 'Comment',
-        },
-      })
+       .populate('author')
+       
+      .exec();
+    return post;
+  }
+
+  async findLikers(postID: mongoose.Schema.Types.ObjectId): Promise<Post> {
+    const post = await this.postModel
+      .findById(postID)
+      .where({ isDeleted: false })
+       .populate('author')
+       .populate('likes')
       .exec();
     return post;
   }

@@ -47,6 +47,15 @@ export class PostController {
     return this.postService.findOne(postID);
   }
 
+  @Get(':postID/likes')
+  findLikers(
+    @Param('postID', new MongoDBIDPipe())
+    postID: mongoose.Schema.Types.ObjectId,
+  ) {
+    return this.postService.findLikers(postID);
+  }
+
+
   @Roles(Role.AnimeFan, Role.QA, Role.Admin)
   @Put(':postID')
   update(
