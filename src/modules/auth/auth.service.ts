@@ -14,7 +14,7 @@ import { birthdayStringOptions } from 'src/shared/util/date.util';
 export class AuthService {
   constructor(
     // * Models
-    @InjectModel('User') private userModel: Model<UserDocument>,
+    @InjectModel('User') private readonly userModel: Model<UserDocument>,
     // * Services
     private readonly userService: UserService,
     private readonly jwtService: JwtService,

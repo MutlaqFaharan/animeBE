@@ -8,7 +8,7 @@ import { UserDocument } from '../user/entities/user.entity';
 @Injectable()
 export class AdminService {
   constructor(
-    @InjectModel('User') private userModel: Model<UserDocument>,
+    @InjectModel('User') private readonly userModel: Model<UserDocument>,
     private readonly qaService: QAService,
   ) {}
 

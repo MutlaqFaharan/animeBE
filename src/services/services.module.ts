@@ -5,6 +5,6 @@ import { ServerLogger } from './logger/server-logger';
   controllers: [],
   providers: [ServerLogger],
   imports: [],
-  exports: [],
+  exports: [ServerLogger],
 })
 export class ServicesModule {}

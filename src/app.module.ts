@@ -2,10 +2,8 @@ import { ModulesModule } from './modules/modules.module';
 import { Module } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
 import { AppController } from './app.controller';
-import { AppService } from './app.service';
 import { I18nModule } from 'nestjs-i18n';
 import { MongooseModule } from '@nestjs/mongoose';
-import { ServerLogger } from './services/logger/server-logger';
 import { ServicesModule } from './services/services.module';
 import { PassportModule } from '@nestjs/passport';
 import { CloudinaryModule } from './cloudinary/cloudinary.module';
@@ -16,6 +14,7 @@ import {
   GlobalFilters,
   GlobalGuards,
   GlobalInterceptors,
+  GlobalServices,
 } from './shared/configs/app.configs';
 import { GuardModule } from './guards/guard.module';
 
@@ -25,17 +24,16 @@ import { GuardModule } from './guards/guard.module';
     MongooseModule.forRoot(process.env.MONGODB_URL),
     ThrottlerModule.forRoot(ThrottlerOptions),
     I18nModule.forRoot(I18nOptions),
-    ModulesModule,
     GuardModule,
     ServicesModule,
     DecoratorsModule,
     PassportModule,
     CloudinaryModule,
+    ModulesModule,
   ],
   controllers: [AppController],
   providers: [
-    AppService,
-    ServerLogger,
+    ...GlobalServices,
     ...GlobalGuards,
     ...GlobalFilters,
     ...GlobalInterceptors,

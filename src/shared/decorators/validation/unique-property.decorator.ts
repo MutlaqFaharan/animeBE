@@ -139,7 +139,7 @@ export function UniquePhoneNumber(validationOptions?: ValidationOptions) {
 @ValidatorConstraint({ name: 'UniqueUsername', async: true })
 @Injectable()
 export class CustomUsernameValidation implements ValidatorConstraintInterface {
-  constructor(@InjectModel('User') private userModel: Model<UserDocument>) {}
+  constructor(@InjectModel('User') private readonly userModel: Model<UserDocument>) {}
 
   async validate(
     value: any,

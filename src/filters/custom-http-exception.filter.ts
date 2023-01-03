@@ -10,7 +10,10 @@ import { ServerLogger } from 'src/services/logger/server-logger';
 
 @Catch(HttpException)
 export class CustomHTTPExceptionFilter implements ExceptionFilter {
-  constructor(private i18n: I18nService, private logger: ServerLogger) {}
+  constructor(
+    private readonly i18n: I18nService,
+    private readonly logger: ServerLogger,
+  ) {}
 
   async catch(exception: HttpException, host: ArgumentsHost) {
     const ctx = host.switchToHttp();

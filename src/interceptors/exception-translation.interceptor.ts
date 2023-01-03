@@ -13,7 +13,10 @@ import { ServerLogger } from 'src/services/logger/server-logger';
 @Catch(HttpException)
 @Injectable()
 export class CustomLoggerInterceptor implements NestInterceptor {
-  constructor(private i18n: I18nService, private logger: ServerLogger) {}
+  constructor(
+    private readonly i18n: I18nService,
+    private readonly logger: ServerLogger,
+  ) {}
 
   intercept(context: ExecutionContext, next: CallHandler): Observable<any> {
     const request = context.switchToHttp().getRequest();

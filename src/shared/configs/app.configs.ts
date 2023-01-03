@@ -1,3 +1,4 @@
+import { AppService } from 'src/app.service';
 import {
   GlobalCustomLoggerInterceptor,
   GlobalThrottlerGuard,
@@ -15,3 +16,5 @@ export const GlobalGuards = [
   GlobalRolesGuard,
   GlobalJwtAuthGuard,
 ];
+
+export const GlobalServices = [AppService];
