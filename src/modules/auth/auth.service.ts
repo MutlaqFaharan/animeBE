@@ -52,7 +52,7 @@ export class AuthService {
     return { token };
   }
 
-  async signUp(createAnimeFanDto: CreateAnimeFanDto, req: any) {
+  async signUp(createAnimeFanDto: CreateAnimeFanDto) {
     const animeFan = new this.userModel(createAnimeFanDto);
     const salt = await bcrypt.genSalt();
 
