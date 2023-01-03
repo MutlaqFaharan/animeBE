@@ -14,7 +14,7 @@ import { Post, PostDocument } from './entities/post.entity';
 @Injectable()
 export class PostService {
   constructor(
-    @InjectModel('Post') private postModel: Model<PostDocument>,
+    @InjectModel('Post') private readonly postModel: Model<PostDocument>,
     private readonly userService: UserService,
   ) {}
 
@@ -47,8 +47,8 @@ export class PostService {
     const post = await this.postModel
       .findById(postID)
       .where({ isDeleted: false })
-       .populate('author')
-       
+      .populate('author')
+
       .exec();
     return post;
   }
@@ -57,8 +57,8 @@ export class PostService {
     const post = await this.postModel
       .findById(postID)
       .where({ isDeleted: false })
-       .populate('author')
-       .populate('likes')
+      .populate('author')
+      .populate('likes')
       .exec();
     return post;
   }

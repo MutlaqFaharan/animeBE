@@ -9,7 +9,9 @@ import { UniqueEmailUsernameQuery } from './dto/unique-email-username.query';
 
 @Injectable()
 export class AnimeFanService {
-  constructor(@InjectModel('User') private userModel: Model<UserDocument>) {}
+  constructor(
+    @InjectModel('User') private readonly userModel: Model<UserDocument>,
+  ) {}
 
   uniqueProperty(query: UniqueEmailUsernameQuery) {}
 

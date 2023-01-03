@@ -14,7 +14,7 @@ import { checkNullability } from 'src/shared/util/check-nullability.util';
 @Injectable()
 export class RolesGuard implements CanActivate {
   constructor(
-    private reflector: Reflector,
+    private readonly reflector: Reflector,
     private readonly jwtService: JwtService,
   ) {}
 

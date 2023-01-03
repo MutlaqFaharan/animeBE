@@ -10,7 +10,9 @@ import { UserDocument, User } from './entities/user.entity';
 
 @Injectable()
 export class UserService {
-  constructor(@InjectModel('User') private userModel: Model<UserDocument>) {}
+  constructor(
+    @InjectModel('User') private readonly userModel: Model<UserDocument>,
+  ) {}
 
   // * Service Functions
   async findOneByCredentials(userCredentials: string): Promise<User> {

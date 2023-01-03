@@ -22,27 +22,32 @@ export class ServerLogger implements LoggerService {
       createWriteStream(this.filePath, { flags: 'a' });
     }
     if (!this.logFile)
-      this.logFile = createWriteStream(this.filePath, { flags: 'a' }); // a for append/ w for write
+      this.logFile = createWriteStream(this.filePath, { flags: 'a' });
   }
-  debug(message: any, context: string = 'DEBUG') {
+  debug(message: string, context: string = 'DEBUG') {
     this.basicLog(message, context, 'DEBUG', DebugColorScheme);
   }
-  error(message: any, context: string = 'ERROR') {
+  error(message: string, context: string = 'ERROR') {
     this.basicLog(message, context, 'ERROR', ErrorColorScheme);
   }
 
-  log(message: any, context: string = 'LOG') {
+  log(message: string, context: string = 'LOG') {
     this.basicLog(message, context, 'LOG', LogColorScheme);
   }
 
-  verbose(message: any, context = 'VERBOSE') {
+  verbose(message: string, context = 'VERBOSE') {
     this.basicLog(message, context, 'VERBOSE', VerboseColorScheme); // whatever that means -Talha
   }
-  warn(message: any, context = 'WARN') {
+  warn(message: string, context = 'WARN') {
     this.basicLog(message, context, 'WARN', WarnColorScheme);
   }
 
-  basicLog(message, context, type, colorScheme = null) {
+  basicLog(
+    message: string,
+    context: string,
+    type: string | number,
+    colorScheme = null,
+  ) {
     const { messageColor, contextColor } = colorScheme;
     const customMessage = `${messageColor}[Anime SM] ${
       process.pid
@@ -51,7 +56,7 @@ export class ServerLogger implements LoggerService {
   }
 
   APIlog(
-    message: any,
+    message: string,
     context: any = 'API',
     reqInfo: any,
     statusCode: number,
@@ -66,7 +71,7 @@ export class ServerLogger implements LoggerService {
     this._logA(this._formatMessageForLogFile(reqInfo, statusCode));
   }
 
-  private _logA(message) {
+  private _logA(message: string) {
     // writing to file; A stands for apple
     this.logFile.write(format('', message) + '\n');
   }

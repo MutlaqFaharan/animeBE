@@ -1,4 +1,4 @@
-import { Injectable  } from '@nestjs/common';
+import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import mongoose, { Model } from 'mongoose';
 import { UserService } from 'src/modules/system-users/user/user.service';
@@ -6,7 +6,7 @@ import { emptyDocument } from 'src/shared/db-error-handling/empty-document.middl
 import { ReturnMessage } from 'src/shared/interfaces/general/return-message.interface';
 import { checkNullability } from 'src/shared/util/check-nullability.util';
 import { currentDate } from 'src/shared/util/date.util';
- import { PostService } from '../post/post.service';
+import { PostService } from '../post/post.service';
 import { CreateCommentDto } from './dto/create-comment.dto';
 import { UpdateCommentDto } from './dto/update-comment.dto';
 import { Comment, CommentDocument } from './entities/comment.entity';
@@ -14,9 +14,10 @@ import { Comment, CommentDocument } from './entities/comment.entity';
 @Injectable()
 export class CommentService {
   constructor(
-    @InjectModel('Comment') private commentModel: Model<CommentDocument>,
-    private postService: PostService,
-    private userService: UserService,
+    @InjectModel('Comment')
+    private readonly commentModel: Model<CommentDocument>,
+    private readonly postService: PostService,
+    private readonly userService: UserService,
   ) {}
 
   async create(
@@ -32,12 +33,12 @@ export class CommentService {
     const comment = new this.commentModel(subCreateCommentDto);
 
     comment.author = animeFan._id;
-    comment.post = post._id
+    comment.post = post._id;
     post.comments.push(comment._id);
 
     if (checkNullability(replyTo)) {
       const originalComment = await this.findOne(replyTo);
-      comment.replyTo = originalComment._id
+      comment.replyTo = originalComment._id;
       originalComment.comments.push(comment._id);
       await originalComment.save();
     }
@@ -53,11 +54,7 @@ export class CommentService {
   }
 
   async findAll(postID: mongoose.Schema.Types.ObjectId): Promise<Comment[]> {
-    return this.commentModel
-    .find({post: postID})
-    .populate('comments')
-
- 
+    return this.commentModel.find({ post: postID }).populate('comments');
   }
 
   async update(
