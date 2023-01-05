@@ -43,7 +43,7 @@ export class AuthService {
     const payload: TokenPayload = {
       _id: user._id,
       username: user.username,
-      role: user.role,
+      role: +user.role,
     };
     const token = this.jwtService.sign(payload, {
       secret: process.env.TOKEN_SECRET,
