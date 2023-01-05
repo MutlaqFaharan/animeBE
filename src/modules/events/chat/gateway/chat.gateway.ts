@@ -51,8 +51,8 @@ export class ChatGateway implements OnGatewayConnection, OnGatewayDisconnect {
     try {
       const user = await this.chatService.findUserForChatSocket(socket);
 
-      if (checkObjectNullability(user)) {
-        this.disconnect(socket);
+      if (!checkObjectNullability(user)) {
+        return this.disconnect(socket);
       } else {
         this.server.emit('message', user);
       }
@@ -68,6 +68,7 @@ export class ChatGateway implements OnGatewayConnection, OnGatewayDisconnect {
 
   async handleDisconnect(socket: Socket) {
     this.logger.log('User Disconnected', 'WEB SOCKET');
+    socket.disconnect();
   }
 
   afterInit(server: any) {
