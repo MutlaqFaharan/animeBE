@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
-import mongoose, { Model } from 'mongoose';
+import { Model, Types } from 'mongoose';
 import { User } from 'src/modules/system-users/user/entities/user.entity';
 import { UserService } from 'src/modules/system-users/user/user.service';
 import { emptyDocument } from 'src/shared/db-error-handling/empty-document.middleware';
@@ -20,7 +20,7 @@ export class PostService {
 
   async create(
     createPostDto: CreatePostDto,
-    animeFanID: mongoose.Schema.Types.ObjectId,
+    animeFanID: Types.ObjectId,
   ): Promise<Post> {
     const post = new this.postModel(createPostDto);
     const animeFan = await this.userService.findOneByIDAsDocument(animeFanID);
@@ -43,7 +43,7 @@ export class PostService {
     return posts;
   }
 
-  async findOne(postID: mongoose.Schema.Types.ObjectId): Promise<Post> {
+  async findOne(postID: Types.ObjectId): Promise<Post> {
     const post = await this.postModel
       .findById(postID)
       .where({ isDeleted: false })
@@ -53,7 +53,7 @@ export class PostService {
     return post;
   }
 
-  async findLikers(postID: mongoose.Schema.Types.ObjectId): Promise<Post> {
+  async findLikers(postID: Types.ObjectId): Promise<Post> {
     const post = await this.postModel
       .findById(postID)
       .where({ isDeleted: false })
@@ -64,7 +64,7 @@ export class PostService {
   }
 
   async update(
-    postID: mongoose.Schema.Types.ObjectId,
+    postID: Types.ObjectId,
     updatePostDto: UpdatePostDto,
   ): Promise<Post> {
     let post = await this.postModel.findByIdAndUpdate(postID, updatePostDto);
@@ -75,7 +75,7 @@ export class PostService {
     return post;
   }
 
-  async remove(postID: mongoose.Schema.Types.ObjectId): Promise<Post> {
+  async remove(postID: Types.ObjectId): Promise<Post> {
     const post = await this.postModel.findByIdAndUpdate(postID, {
       isDeleted: true,
     });
@@ -84,8 +84,8 @@ export class PostService {
   }
 
   async likePost(
-    postID: mongoose.Schema.Types.ObjectId,
-    animeFanID: mongoose.Schema.Types.ObjectId,
+    postID: Types.ObjectId,
+    animeFanID: Types.ObjectId,
   ): Promise<ReturnMessage> {
     const post = await this.postModel
       .findById(postID)

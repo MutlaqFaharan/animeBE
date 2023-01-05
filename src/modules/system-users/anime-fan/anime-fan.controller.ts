@@ -8,7 +8,7 @@ import {
   UseGuards,
 } from '@nestjs/common';
 import { ApiTags } from '@nestjs/swagger';
-import mongoose from 'mongoose';
+import { Types } from 'mongoose';
 import { JwtAuthGuard } from 'src/guards/jwt-auth.guard';
 import { Roles } from 'src/shared/decorators/roles.decorator';
 import { Role } from 'src/shared/enums/role.enum';
@@ -36,7 +36,7 @@ export class AnimeFanController {
   @Get(':animeFanID')
   findOne(
     @Param('animeFanID', new MongoDBIDPipe())
-    animeFanID: mongoose.Schema.Types.ObjectId,
+    animeFanID: Types.ObjectId,
   ) {
     return this.animeFanService.findOne(animeFanID);
   }
@@ -45,7 +45,7 @@ export class AnimeFanController {
   @Patch(':animeFanID')
   followUser(
     @Param('animeFanID', new MongoDBIDPipe())
-    animeFanID: mongoose.Schema.Types.ObjectId,
+    animeFanID: Types.ObjectId,
     @Req() req: any,
   ) {
     return this.animeFanService.followUser(animeFanID, req.user._id);

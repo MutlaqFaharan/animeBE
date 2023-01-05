@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
-import mongoose, { Model } from 'mongoose';
+import { Model, Types } from 'mongoose';
 import { ReturnMessage } from 'src/shared/interfaces/general/return-message.interface';
 import { checkNullability } from 'src/shared/util/check-nullability.util';
 import { User, UserDocument } from '../user/entities/user.entity';
@@ -30,7 +30,7 @@ export class AnimeFanService {
       .exec();
   }
 
-  async findOne(animeFanID: mongoose.Schema.Types.ObjectId) {
+  async findOne(animeFanID: Types.ObjectId) {
     const animeFan = await this.userModel
       .findById(animeFanID)
       .populate('posts')
@@ -45,8 +45,8 @@ export class AnimeFanService {
   }
 
   async followUser(
-    animeFanID: mongoose.Schema.Types.ObjectId,
-    userID: mongoose.Schema.Types.ObjectId,
+    animeFanID: Types.ObjectId,
+    userID: Types.ObjectId,
   ): Promise<ReturnMessage> {
     const animeFan = await this.userModel.findById(animeFanID);
     const user = await this.userModel.findById(userID);

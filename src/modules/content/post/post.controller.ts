@@ -13,7 +13,7 @@ import {
 import { PostService } from './post.service';
 import { CreatePostDto } from './dto/create-post.dto';
 import { UpdatePostDto } from './dto/update-post.dto';
-import mongoose from 'mongoose';
+import { Types } from 'mongoose';
 import { ApiTags } from '@nestjs/swagger';
 import { JwtAuthGuard } from 'src/guards/jwt-auth.guard';
 import { Roles } from 'src/shared/decorators/roles.decorator';
@@ -42,7 +42,7 @@ export class PostController {
   @Get(':postID')
   findOne(
     @Param('postID', new MongoDBIDPipe())
-    postID: mongoose.Schema.Types.ObjectId,
+    postID: Types.ObjectId,
   ) {
     return this.postService.findOne(postID);
   }
@@ -50,17 +50,16 @@ export class PostController {
   @Get(':postID/likes')
   findLikers(
     @Param('postID', new MongoDBIDPipe())
-    postID: mongoose.Schema.Types.ObjectId,
+    postID: Types.ObjectId,
   ) {
     return this.postService.findLikers(postID);
   }
-
 
   @Roles(Role.AnimeFan, Role.QA, Role.Admin)
   @Put(':postID')
   update(
     @Param('postID', new MongoDBIDPipe())
-    postID: mongoose.Schema.Types.ObjectId,
+    postID: Types.ObjectId,
     @Body() updatePostDto: UpdatePostDto,
   ) {
     return this.postService.update(postID, updatePostDto);
@@ -70,7 +69,7 @@ export class PostController {
   @Patch(':postID/like')
   likePost(
     @Param('postID', new MongoDBIDPipe())
-    postID: mongoose.Schema.Types.ObjectId,
+    postID: Types.ObjectId,
     @Req() req,
   ) {
     return this.postService.likePost(postID, req?.user?._id);
@@ -80,7 +79,7 @@ export class PostController {
   @Delete(':postID')
   remove(
     @Param('postID', new MongoDBIDPipe())
-    postID: mongoose.Schema.Types.ObjectId,
+    postID: Types.ObjectId,
   ) {
     return this.postService.remove(postID);
   }

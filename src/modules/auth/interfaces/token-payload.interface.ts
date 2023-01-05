@@ -1,5 +1,7 @@
+import { Types } from "mongoose";
+
 export interface TokenPayload {
-  _id: string;
+  _id: Types.ObjectId;
   username: string;
   role: number;
 }
