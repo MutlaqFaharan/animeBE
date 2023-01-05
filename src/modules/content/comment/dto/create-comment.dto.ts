@@ -6,7 +6,7 @@ import {
   IsString,
   MaxLength,
 } from 'class-validator';
-import mongoose from 'mongoose';
+import { Types } from 'mongoose';
 
 export class CreateCommentDto {
   @ApiProperty()
@@ -20,5 +20,5 @@ export class CreateCommentDto {
   @ApiProperty()
   @IsOptional()
   @IsMongoId()
-  replyTo?: mongoose.Schema.Types.ObjectId; // replied-to Comment
+  replyTo?: Types.ObjectId; // replied-to Comment
 }

@@ -10,7 +10,7 @@ import {
 } from '@nestjs/common';
 import { Req } from '@nestjs/common/decorators';
 import { ApiTags } from '@nestjs/swagger';
-import mongoose from 'mongoose';
+import { Types } from 'mongoose';
 import { JwtAuthGuard } from 'src/guards/jwt-auth.guard';
 import { MongoDBIDPipe } from 'src/shared/pipes/mongo-id.pipe';
 import { CommentService } from './comment.service';
@@ -27,7 +27,7 @@ export class CommentController {
   create(
     @Body() createCommentDto: CreateCommentDto,
     @Param('postID', new MongoDBIDPipe())
-    postID: mongoose.Schema.Types.ObjectId,
+    postID: Types.ObjectId,
     @Req() req: any,
   ) {
     return this.commentService.create(createCommentDto, postID, req.user._id);
@@ -36,7 +36,7 @@ export class CommentController {
   @Get()
   findAll(
     @Param('postID', new MongoDBIDPipe())
-    postID: mongoose.Schema.Types.ObjectId,
+    postID: Types.ObjectId,
   ) {
     return this.commentService.findAll(postID);
   }
@@ -44,10 +44,10 @@ export class CommentController {
   @Patch(':commentID')
   update(
     @Param('commentID', new MongoDBIDPipe())
-    commentID: mongoose.Schema.Types.ObjectId,
+    commentID: Types.ObjectId,
     @Body() updateCommentDto: UpdateCommentDto,
     @Param('postID', new MongoDBIDPipe())
-    postID: mongoose.Schema.Types.ObjectId,
+    postID: Types.ObjectId,
   ) {
     return this.commentService.update(commentID, updateCommentDto, postID);
   }
@@ -55,9 +55,9 @@ export class CommentController {
   @Delete(':id')
   remove(
     @Param('postID', new MongoDBIDPipe())
-    postID: mongoose.Schema.Types.ObjectId,
+    postID: Types.ObjectId,
     @Param('commentID', new MongoDBIDPipe())
-    commentID: mongoose.Schema.Types.ObjectId,
+    commentID: Types.ObjectId,
   ) {
     return this.commentService.remove(commentID, postID);
   }

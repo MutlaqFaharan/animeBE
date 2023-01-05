@@ -10,7 +10,7 @@ import {
 import { UserService } from './user.service';
 import { ApiTags } from '@nestjs/swagger';
 import { MongoDBIDPipe } from 'src/shared/pipes/mongo-id.pipe';
-import mongoose from 'mongoose';
+import { Types } from 'mongoose';
 import { UpdateProfileDto } from './dto/update-profile.dto';
 
 @ApiTags('user')
@@ -22,7 +22,7 @@ export class UserController {
   @Get(':userID')
   getProfile(
     @Param('userID', new MongoDBIDPipe())
-    userID: mongoose.Schema.Types.ObjectId,
+    userID: Types.ObjectId,
   ) {
     return this.userService.findOneByID(userID);
   }
@@ -30,7 +30,7 @@ export class UserController {
   @Put(':userID')
   editProfile(
     @Param('userID', new MongoDBIDPipe())
-    userID: mongoose.Schema.Types.ObjectId,
+    userID: Types.ObjectId,
     @Body() updateProfileDto: UpdateProfileDto,
   ) {
     return this.userService.editProfile(userID, updateProfileDto);

@@ -1,6 +1,6 @@
 import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
-import mongoose, { Model } from 'mongoose';
+import { Model, Types } from 'mongoose';
 import { emptyDocument } from 'src/shared/db-error-handling/empty-document.middleware';
 import { ReturnMessage } from 'src/shared/interfaces/general/return-message.interface';
 import { cleanObject } from 'src/shared/util/clean-object.util';
@@ -43,7 +43,7 @@ export class UserService {
     return user;
   }
 
-  async findOneByID(userID: mongoose.Schema.Types.ObjectId): Promise<User> {
+  async findOneByID(userID: Types.ObjectId): Promise<User> {
     const user = await this.userModel
       .findById(userID)
       .populate('posts')
@@ -54,16 +54,14 @@ export class UserService {
     return cleanObject(user);
   }
 
-  async findOneByIDAsDocument(
-    userID: mongoose.Schema.Types.ObjectId,
-  ): Promise<User> {
+  async findOneByIDAsDocument(userID: Types.ObjectId): Promise<User> {
     const user = await this.userModel.findById(userID);
     emptyDocument(user, 'user');
     return user;
   }
 
   async editProfile(
-    userID: mongoose.Schema.Types.ObjectId,
+    userID: Types.ObjectId,
     updateProfileDto: UpdateProfileDto,
   ): Promise<ReturnMessage> {
     const user = await this.userModel.findByIdAndUpdate(

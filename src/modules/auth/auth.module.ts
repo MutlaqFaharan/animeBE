@@ -6,6 +6,7 @@ import { JwtModule } from '@nestjs/jwt';
 import { LocalStrategy } from './strategies/local.strategy';
 import { JwtStrategy } from './strategies/jwt.strategy';
 import { UserModule } from '../system-users/user/user.module';
+import { ConfigModule, ConfigService } from '@nestjs/config';
 
 @Module({
   controllers: [AuthController],
@@ -13,12 +14,15 @@ import { UserModule } from '../system-users/user/user.module';
   imports: [
     UserModule,
     PassportModule,
-    JwtModule.register({
-      secret: process.env.TOKEN_SECRET,
-      signOptions: {
-        expiresIn: process.env.EXPIRES_IN,
-      },
+    JwtModule.registerAsync({
+      imports: [ConfigModule],
+      inject: [ConfigService],
+      useFactory: async (configService: ConfigService) => ({
+        secret: configService.get('TOKEN_SECRET'),
+        signOptions: configService.get('EXPIRES_IN'),
+      }),
     }),
   ],
+  exports: [AuthService],
 })
 export class AuthModule {}

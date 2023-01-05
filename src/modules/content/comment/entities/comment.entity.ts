@@ -1,5 +1,5 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
-import mongoose, { HydratedDocument, NullExpression } from 'mongoose';
+import { HydratedDocument, NullExpression, Types } from 'mongoose';
 import { Basic } from 'src/shared/entities/basic.entity';
 
 /**
@@ -18,11 +18,11 @@ export class Comment extends Basic {
   text: string;
 
   @Prop({
-    type: mongoose.Schema.Types.ObjectId,
+    type: Types.ObjectId,
     ref: 'User',
     required: [true, 'A comment Must Have An Author'],
   })
-  author: mongoose.Schema.Types.ObjectId;
+  author: Types.ObjectId;
   /*
   comments on the specified comment
   example
@@ -30,21 +30,21 @@ export class Comment extends Basic {
   -- "Hi this is a replay"
   -- "Another replay"
   */
-  @Prop({ type: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Comment' }] })
-  comments: mongoose.Schema.Types.ObjectId[]; // the comments replaying to this comment
+  @Prop({ type: [{ type: Types.ObjectId, ref: 'Comment' }] })
+  comments: Types.ObjectId[]; // the comments replaying to this comment
 
-  @Prop({ type: [{ type: mongoose.Schema.Types.ObjectId, ref: 'User' }] })
-  likes: mongoose.Schema.Types.ObjectId[];
+  @Prop({ type: [{ type: Types.ObjectId, ref: 'User' }] })
+  likes: Types.ObjectId[];
 
   @Prop({
-    type: mongoose.Schema.Types.ObjectId,
+    type: Types.ObjectId,
     ref: 'Post',
     required: [true, 'A Comment Must Belong to a Post'],
   })
-  post: mongoose.Schema.Types.ObjectId;
+  post: Types.ObjectId;
 
-  @Prop({ type: mongoose.Schema.Types.ObjectId, ref: 'Comment' })
-  replyTo?: mongoose.Schema.Types.ObjectId | NullExpression; // if the comment is a replay to another comment it will have an id else it will be null
+  @Prop({ type: Types.ObjectId, ref: 'Comment' })
+  replyTo?: Types.ObjectId | NullExpression; // if the comment is a replay to another comment it will have an id else it will be null
 
   @Prop({
     type: Boolean,

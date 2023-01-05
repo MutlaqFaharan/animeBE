@@ -1,6 +1,6 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { Exclude } from 'class-transformer';
-import mongoose, { HydratedDocument } from 'mongoose';
+import { HydratedDocument, Types } from 'mongoose';
 import { Comment } from 'src/modules/content/comment/entities/comment.entity';
 import { Post } from 'src/modules/content/post/entities/post.entity';
 import { Basic } from 'src/shared/entities/basic.entity';
@@ -68,22 +68,22 @@ export class User extends Basic {
   })
   role: Role;
 
-  @Prop({ type: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Post' }] })
+  @Prop({ type: [{ type: Types.ObjectId, ref: 'Post' }] })
   posts: Post[];
 
-  @Prop({ type: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Post' }] })
+  @Prop({ type: [{ type: Types.ObjectId, ref: 'Post' }] })
   likedPosts: Post[];
 
-  @Prop({ type: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Comment' }] })
+  @Prop({ type: [{ type: Types.ObjectId, ref: 'Comment' }] })
   comments: Comment[];
 
-  @Prop({ type: [{ type: mongoose.Schema.Types.ObjectId, ref: 'User' }] })
+  @Prop({ type: [{ type: Types.ObjectId, ref: 'User' }] })
   followers: User[];
 
-  @Prop({ type: [{ type: mongoose.Schema.Types.ObjectId, ref: 'User' }] })
+  @Prop({ type: [{ type: Types.ObjectId, ref: 'User' }] })
   following: User[];
 
-  @Prop({ type: [{ type: mongoose.Schema.Types.ObjectId, ref: 'User' }] })
+  @Prop({ type: [{ type: Types.ObjectId, ref: 'User' }] })
   blockedUsers: User[];
 }
 export const UserSchema = SchemaFactory.createForClass(User);
