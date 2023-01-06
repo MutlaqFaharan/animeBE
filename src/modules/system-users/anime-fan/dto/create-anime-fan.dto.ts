@@ -57,6 +57,7 @@ export class CreateAnimeFanDto {
       property: 'Birth Day',
     }),
   })
+  @Transform((param) => param.value.toLowerCase().trim())
   @Transform(({ value }) => new Date(value))
   @MaxDate(thirteenYearsAgo, {
     message: i18nValidationMessage('validation.maxDate'),

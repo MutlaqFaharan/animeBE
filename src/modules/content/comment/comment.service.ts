@@ -5,7 +5,6 @@ import { UserService } from 'src/modules/system-users/user/user.service';
 import { emptyDocument } from 'src/shared/db-error-handling/empty-document.middleware';
 import { ReturnMessage } from 'src/shared/interfaces/general/return-message.interface';
 import { checkNullability } from 'src/shared/util/check-nullability.util';
-import { currentDate } from 'src/shared/util/date.util';
 import { PostService } from '../post/post.service';
 import { CreateCommentDto } from './dto/create-comment.dto';
 import { UpdateCommentDto } from './dto/update-comment.dto';
@@ -70,7 +69,6 @@ export class CommentService {
       createCommentDto,
     );
     emptyDocument(comment, 'Comment');
-    comment.updateDate = currentDate;
     comment.isNew = false;
     return comment.save();
   }

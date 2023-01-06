@@ -64,11 +64,18 @@
     "colId": "b315b745-eaa3-471c-90b4-f3a2d045acc2",
     "containerId": "e47f5703-e566-4089-8ef7-3067a9ce81c6",
     "name": "register",
-    "url": "",
-    "method": "GET",
+    "url": "auth/sign-up",
+    "method": "POST",
     "sortNum": 40000,
     "created": "2023-01-02T21:05:42.554Z",
-    "modified": "2023-01-02T21:05:42.554Z",
-    "headers": []
+    "modified": "2023-01-05T23:04:23.255Z",
+    "headers": [],
+    "params": [],
+    "body": {
+      "type": "json",
+      "raw": "{\n  \"email\": \"mutlaqalsadeed0@gmail.com\",\n  \"username\": \"mutlaq0\",\n  \"password\": \"mutlaq12345\",\n  \"confirmPassword\": \"mutlaq12345\",\n  \"birthday\": \"07/12/2010\"\n}",
+      "form": []
+    },
+    "tests": []
   }
 ]

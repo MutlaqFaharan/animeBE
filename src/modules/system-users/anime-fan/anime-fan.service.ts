@@ -60,12 +60,15 @@ export class AnimeFanService {
   }
 
   followUnfollowUsers(animeFan: User, user: User) {
-    if (user.following.indexOf(animeFan._id) !== -1) {
-      user.following.splice(user.following.indexOf(animeFan._id), 1);
-      animeFan.followers.splice(animeFan.followers.indexOf(user._id), 1);
+    if (user.following.indexOf((animeFan as any)._id) !== -1) {
+      user.following.splice(user.following.indexOf((animeFan as any)._id), 1);
+      animeFan.followers.splice(
+        animeFan.followers.indexOf((user as any)._id),
+        1,
+      );
     } else {
-      user.following.push(animeFan._id);
-      animeFan.followers.push(user._id);
+      user.following.push((animeFan as any)._id);
+      animeFan.followers.push((user as any)._id);
     }
   }
 }

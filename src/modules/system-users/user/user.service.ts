@@ -4,14 +4,13 @@ import { Model, Types } from 'mongoose';
 import { emptyDocument } from 'src/shared/db-error-handling/empty-document.middleware';
 import { ReturnMessage } from 'src/shared/interfaces/general/return-message.interface';
 import { cleanObject } from 'src/shared/util/clean-object.util';
-import { currentDate } from 'src/shared/util/date.util';
 import { UpdateProfileDto } from './dto/update-profile.dto';
 import { UserDocument, User } from './entities/user.entity';
 
 @Injectable()
 export class UserService {
   constructor(
-    @InjectModel('User') private readonly userModel: Model<UserDocument>,
+    @InjectModel(User.name) private readonly userModel: Model<UserDocument>,
   ) {}
 
   // * Service Functions
@@ -60,6 +59,12 @@ export class UserService {
     return user;
   }
 
+  async findOneByIDForChatSocket(userID: Types.ObjectId): Promise<User> {
+    const user = await this.userModel.findById(userID).populate('rooms');
+    emptyDocument(user, 'user');
+    return user;
+  }
+
   async editProfile(
     userID: Types.ObjectId,
     updateProfileDto: UpdateProfileDto,
@@ -70,7 +75,6 @@ export class UserService {
     );
 
     emptyDocument(user, 'User');
-    user.updateDate = currentDate;
     user.isNew = false;
     await user.save();
     return {

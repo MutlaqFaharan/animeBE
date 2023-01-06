@@ -1,7 +1,6 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
-import { HydratedDocument, Types } from 'mongoose';
+import { HydratedDocument, Types, Document } from 'mongoose';
 import { User } from 'src/modules/system-users/user/entities/user.entity';
-import { Basic } from 'src/shared/entities/basic.entity';
 import { Comment } from '../../comment/entities/comment.entity';
 
 export type PostDocument = HydratedDocument<Post>;
@@ -9,7 +8,7 @@ export type PostDocument = HydratedDocument<Post>;
 @Schema({
   validateBeforeSave: true,
 })
-export class Post extends Basic {
+export class Post extends Document {
   @Prop({
     type: Boolean,
     default: false,
