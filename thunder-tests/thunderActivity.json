@@ -1,47 +1,28 @@
 [
   {
-    "_id": "f99f1436-3107-4dd1-a08c-8cca44dbcdcf",
-    "colId": "history",
-    "containerId": "",
-    "name": "https://dzbogpctnm.eu10.qoddiapp.com/api/ ",
-    "url": "https://dzbogpctnm.eu10.qoddiapp.com/api/ ",
-    "method": "GET",
-    "sortNum": 0,
-    "created": "2022-12-27T19:42:39.188Z",
-    "modified": "2022-12-27T19:42:39.188Z",
-    "headers": [],
-    "params": [],
-    "tests": []
-  },
-  {
-    "_id": "9f5cbc25-bee0-468f-88df-76faa0c37abd",
-    "colId": "history",
-    "containerId": "",
-    "name": "https://dzbogpctnm.eu10.qoddiapp.com/api/",
-    "url": "https://dzbogpctnm.eu10.qoddiapp.com/api/",
-    "method": "GET",
-    "sortNum": 0,
-    "created": "2022-12-27T19:42:45.232Z",
-    "modified": "2022-12-27T19:42:45.232Z",
-    "headers": [],
-    "params": [],
-    "tests": []
-  },
-  {
     "_id": "e5ef91c5-70a3-4348-bd02-a0424ff112df",
     "colId": "history",
     "containerId": "",
     "name": "https://dzbogpctnm.eu10.qoddiapp.com/api/auth/login",
-    "url": "https://dzbogpctnm.eu10.qoddiapp.com/api/auth/login",
+    "url": "https://fcm.googleapis.com/fcm/send",
     "method": "POST",
     "sortNum": 0,
     "created": "2022-12-27T19:42:57.869Z",
-    "modified": "2022-12-27T21:52:34.808Z",
-    "headers": [],
+    "modified": "2023-01-06T00:42:58.978Z",
+    "headers": [
+      {
+        "name": "Authorization",
+        "value": "Key=AAAA5sdjTmI:APA91bECUXzB8fPhJH4kiBsv-bnBFUVb-JSvWcSSIt-NjGjrGYsa22apTiXzkFjXjQt58o__5WB_EX6kezLouuyJs_FCljXrMxCv4iuWWzwiJF7MIpFcHVvxQMrqdgybfcFZsM7X3vtm"
+      },
+      {
+        "name": "Content-Type",
+        "value": "application/json"
+      }
+    ],
     "params": [],
     "body": {
       "type": "json",
-      "raw": "{\n  \"email\": \"mutlaqsadeed@digitalarenasolutions.com\",\n  \"password\": \"Mutlaq_12345\"\n}",
+      "raw": "{ \n \"notification\": {\n  \"title\": \"First Notification\", \n  \"body\": \"Hello from Jishnu!!\"\n },\n \"to\" : \"eyJhbGciOiJSUzI1NiIsImtpZCI6ImNlOWI4ODBmODE4MmRkYTU1N2Y3YzcwZTIwZTRlMzcwZTNkMTI3NDciLCJ0eXAiOiJKV1QifQ.eyJpc3MiOiJodHRwczovL3NlY3VyZXRva2VuLmdvb2dsZS5jb20vdW5pdmVyc2l0aWVzLWpvYnNlZWtlcnMtNjJhMTAiLCJhdWQiOiJ1bml2ZXJzaXRpZXMtam9ic2Vla2Vycy02MmExMCIsImF1dGhfdGltZSI6MTY3Mjk2NDk5NCwidXNlcl9pZCI6Im5JQTdOVzUzQTdaRHZmVzhRRDlJUXpVUkF5TzIiLCJzdWIiOiJuSUE3Tlc1M0E3WkR2Zlc4UUQ5SVF6VVJBeU8yIiwiaWF0IjoxNjcyOTY0OTk0LCJleHAiOjE2NzI5Njg1OTQsImVtYWlsIjoiamFtaWwuNzU1MEBvdXRsb29rLmNvbSIsImVtYWlsX3ZlcmlmaWVkIjp0cnVlLCJmaXJlYmFzZSI6eyJpZGVudGl0aWVzIjp7ImVtYWlsIjpbImphbWlsLjc1NTBAb3V0bG9vay5jb20iXX0sInNpZ25faW5fcHJvdmlkZXIiOiJwYXNzd29yZCJ9fQ.a1hjvGuad0AEMYkx1Ohc8k3fqFLteaUQIpnZvoIlEU3eeVe1_vcZkdg7d8EX5hpNmmwbZ8fg2ZS3Kysb4r7FlIIqF0CqbspAfUc12Io7MTyx7D2jbBALVGT2M2JNNAKYV6XssMZkU_e-RpyfcQ-pxVI_r1eL6xkEF6FrWrNA9VydEKDElIjjbjs8MHMRuRFxFhqc_3ta8YZUm6RhXlXrZDKhMChWSG-C8zq1lMqiUQbJQA4qkTBtt6HkWO8kZUw9ATNBNwREcgqqK_WGBWbTnpNdju5JzG_yJd5up4kzyrHzuDvccx3410shh_ulhFMFMUn6sbeWnF8Vhhp-vcRwgg\"\n}",
       "form": []
     },
     "tests": []

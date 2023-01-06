@@ -1,17 +1,18 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { Exclude } from 'class-transformer';
-import { HydratedDocument, Types } from 'mongoose';
+import { Document, HydratedDocument, Types } from 'mongoose';
 import { Comment } from 'src/modules/content/comment/entities/comment.entity';
 import { Post } from 'src/modules/content/post/entities/post.entity';
-import { Basic } from 'src/shared/entities/basic.entity';
+import { Room } from 'src/modules/room/entities/room.entity';
 import { Role } from 'src/shared/enums/role.enum';
 
 export type UserDocument = HydratedDocument<User>;
 
 @Schema({
   validateBeforeSave: true,
+  timestamps: true,
 })
-export class User extends Basic {
+export class User extends Document {
   @Prop({
     type: String,
     minlength: [5, 'Email must be more than 5 characters'],
@@ -85,5 +86,8 @@ export class User extends Basic {
 
   @Prop({ type: [{ type: Types.ObjectId, ref: 'User' }] })
   blockedUsers: User[];
+
+  @Prop({ type: [{ type: Types.ObjectId, ref: 'Room' }] })
+  rooms: Room[];
 }
 export const UserSchema = SchemaFactory.createForClass(User);

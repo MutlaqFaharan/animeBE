@@ -11,6 +11,7 @@ import {
 } from '@nestjs/websockets';
 import { Server, Socket } from 'socket.io';
 import { ServerLogger } from 'src/services/logger/server-logger';
+import { RoomI } from 'src/shared/interfaces/room.interface';
 import { checkObjectNullability } from 'src/shared/util/check-nullability.util';
 import { ChatService } from '../chat.service';
 
@@ -23,15 +24,15 @@ export class ChatGateway implements OnGatewayConnection, OnGatewayDisconnect {
   @WebSocketServer()
   server: Server;
 
-  webSocketLog: string = `Socket Is Live, On Port ${this.configService.get(
-    'CHAT_PORT',
-  )}`;
-
   constructor(
     private readonly logger: ServerLogger,
     private readonly configService: ConfigService,
     private readonly chatService: ChatService,
-  ) {}
+  ) {
+    this.logger.log(
+      `Socket Is Live, On Port ${this.configService.get('CHAT_PORT')}`,
+    );
+  }
 
   onModuleInit() {
     // throw new Error('Method not implemented.');
@@ -47,14 +48,21 @@ export class ChatGateway implements OnGatewayConnection, OnGatewayDisconnect {
   }
 
   async handleConnection(socket: Socket) {
-    this.logger.log('User Connected, ' + this.webSocketLog, 'WEB SOCKET');
     try {
       const user = await this.chatService.findUserForChatSocket(socket);
+      this.logger.log(
+        `User Connected, ${user.username || user.email}`,
+        'WEB SOCKET',
+      );
 
       if (!checkObjectNullability(user)) {
         return this.disconnect(socket);
       } else {
-        this.server.emit('message', user);
+        socket.data.user = user;
+        const userWithRooms = await this.chatService.findRoomsForUser(user._id);
+
+        // Return only rooms connected to the client
+        return this.server.to(socket.id).emit('rooms', userWithRooms.rooms);
       }
     } catch {
       return this.disconnect(socket);
@@ -71,7 +79,10 @@ export class ChatGateway implements OnGatewayConnection, OnGatewayDisconnect {
     socket.disconnect();
   }
 
-  afterInit(server: any) {
-    this.logger.log(this.webSocketLog, 'WEB SOCKET');
+  afterInit(server: any) {}
+
+  @SubscribeMessage('createRoom')
+  async onCreateRoom(socket: Socket, room: RoomI) {
+    return this.chatService.createRoomForChatSocket(room, socket.data.user._id);
   }
 }

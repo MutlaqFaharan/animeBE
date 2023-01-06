@@ -1,6 +1,6 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
-import { HydratedDocument, NullExpression, Types } from 'mongoose';
-import { Basic } from 'src/shared/entities/basic.entity';
+import { HydratedDocument, NullExpression, Types, Document } from 'mongoose';
+import { Post } from '../../post/entities/post.entity';
 
 /**
  * #### All comments will have only one level of nesting
@@ -12,8 +12,9 @@ export type CommentDocument = HydratedDocument<Comment>;
 
 @Schema({
   validateBeforeSave: true,
+  timestamps: true,
 })
-export class Comment extends Basic {
+export class Comment extends Document {
   @Prop({ type: String })
   text: string;
 
@@ -38,7 +39,7 @@ export class Comment extends Basic {
 
   @Prop({
     type: Types.ObjectId,
-    ref: 'Post',
+    ref: Post.name,
     required: [true, 'A Comment Must Belong to a Post'],
   })
   post: Types.ObjectId;

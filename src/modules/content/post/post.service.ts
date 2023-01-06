@@ -6,7 +6,6 @@ import { UserService } from 'src/modules/system-users/user/user.service';
 import { emptyDocument } from 'src/shared/db-error-handling/empty-document.middleware';
 import { PaginationDto } from 'src/shared/dtos/pagination.dto';
 import { ReturnMessage } from 'src/shared/interfaces/general/return-message.interface';
-import { currentDate } from 'src/shared/util/date.util';
 import { CreatePostDto } from './dto/create-post.dto';
 import { UpdatePostDto } from './dto/update-post.dto';
 import { Post, PostDocument } from './entities/post.entity';
@@ -48,7 +47,6 @@ export class PostService {
       .findById(postID)
       .where({ isDeleted: false })
       .populate('author')
-
       .exec();
     return post;
   }
@@ -69,7 +67,6 @@ export class PostService {
   ): Promise<Post> {
     let post = await this.postModel.findByIdAndUpdate(postID, updatePostDto);
     emptyDocument(post, 'post');
-    post.updateDate = currentDate;
     post.isNew = false;
     await post.save();
     return post;
